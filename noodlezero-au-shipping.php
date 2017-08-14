@@ -58,6 +58,7 @@ function fastway_au_shipping_method() {
 				$this->init();
 				$this->enabled = isset($this->settings['enabled']) ? $this->settings['enabled'] : 'yes';
 				$this->title = isset($this->settings['title']) ? $this->settings['title'] : __('Fastway AU Shipping', 'sk8tech-fastwayau');
+				$this->combo = isset($this->settings['combo']) ? $this->settings['combo'] : __('20', 'sk8tech-fastwayau');
 				$this->api_key = $this->settings['api_key'];
 
 				if (empty($this->api_key)) {
@@ -66,6 +67,8 @@ function fastway_au_shipping_method() {
 
 				$this->pickup_rfcode = $this->settings['pickup_rfcode'];
 				$this->support_type = $this->settings['support_type'];
+
+				$this->twocombozip = isset($this->settings['twocombozip']) ? $this->settings['twocombozip'] : __('', 'sk8tech-fastwayau');
 
 				$this->custom_white_zone_parcel_price = $this->settings['custom_white_zone_parcel_price'];
 				$this->custom_red_zone_parcel_price = $this->settings['custom_red_zone_parcel_price'];
@@ -177,6 +180,18 @@ function fastway_au_shipping_method() {
 						'type' => 'text',
 						'description' => __('Title to be display on site', 'sk8tech-fastwayau'),
 						'default' => __('Fastway AU Shipping', 'sk8tech-fastwayau'),
+					),
+					'combo' => array(
+						'title' => __('Combo', 'sk8tech-fastwayau'),
+						'type' => 'number',
+						'description' => __('No. of products to allow free shipping', 'sk8tech-fastwayau'),
+						'default' => 20,
+					),
+					'twocombozip' => array(
+						'title' => __('Two Combo ZIPs', 'sk8tech-fastwayau'),
+						'type' => 'text',
+						'description' => __('The ZIPs to enjoy free shipping when more than two combo is purchased. Use , to seperate', 'sk8tech-fastwayau'),
+						'default' => "",
 					),
 					'api_key' => array(
 						'title' => __('API Key', 'sk8tech-fastwayau'),
@@ -460,14 +475,71 @@ function fastway_au_shipping_method() {
 
 						if (empty($this->support_type) || $this->support_type == "Parcel") {
 							if ($parcel_price != 999999) {
-								$rate = array(
-									'id' => $this->id . "-parcel",
-									'label' => $this->title . " - Parcel (" . $result->result->delivery_timeframe_days . " Days) ",
-									'cost' => $parcel_price,
-									'taxes' => false,
-								);
 
-								$this->add_rate($rate);
+								/**
+								 * Use Postcode/ZIP to determine if this method applies
+								 * @author Jack
+								 */
+								$postcode = $package["destination"]["postcode"];
+
+								$item_count = WC()->cart->get_cart_contents_count();
+
+								if (strstr($this->twocombozip, $postcode) === TRUE) {
+									// The Shipping post code is not found in the pre-configured zip area.
+									// FREE SHIPPING only if item counts exceeds two combo
+
+									if ($item_count >= 2 * $this->combo) {
+
+										$rate = array(
+											'id' => $this->id . "-parcel",
+											'label' => "FREE! " . $this->title . " - Parcel (" . $result->result->delivery_timeframe_days . " Days) ",
+											'cost' => 0,
+											'taxes' => false,
+										);
+
+										$this->add_rate($rate);
+
+									} else {
+
+										$rate = array(
+											'id' => $this->id . "-parcel",
+											'label' => $this->title . " - Parcel (" . $result->result->delivery_timeframe_days . " Days) ",
+											'cost' => $parcel_price,
+											'taxes' => false,
+										);
+
+										$this->add_rate($rate);
+
+									}
+
+								} else {
+									// The Shipping post code is not found in the pre-configured zip area.
+									// FREE SHIPPING only if item counts exceeds one combo
+
+									if ($item_count >= 1 * $this->combo) {
+
+										$rate = array(
+											'id' => $this->id . "-parcel",
+											'label' => "FREE! " . $this->title . " - Parcel (" . $result->result->delivery_timeframe_days . " Days) ",
+											'cost' => 0,
+											'taxes' => false,
+										);
+
+										$this->add_rate($rate);
+
+									} else {
+
+										$rate = array(
+											'id' => $this->id . "-parcel",
+											'label' => $this->title . " - Parcel (" . $result->result->delivery_timeframe_days . " Days) ",
+											'cost' => $parcel_price,
+											'taxes' => false,
+										);
+
+										$this->add_rate($rate);
+
+									}
+								}
 							}
 						}
 
