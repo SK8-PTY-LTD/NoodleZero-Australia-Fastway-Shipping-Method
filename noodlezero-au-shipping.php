@@ -358,6 +358,7 @@ function fastway_au_shipping_method() {
 					return;
 				}
 
+				// Sample Reuqest: http://au.api.fastway.org/v3/psc/lookup/SYD/Ultimo/2007/20?api_key=
 				$handle = curl_init($url);
 				$url = "http://au.api.fastway.org/v3/psc/lookup/" . $final_rfcode . "/" . $d_suburb . "/" . $d_postcode . "/" . ($weight) . "?api_key=" . $this->api_key;
 				$url = str_replace('+', '%20', $url);
@@ -392,6 +393,8 @@ function fastway_au_shipping_method() {
 					$parcel_price = 999999;
 					$satchel_price = 999999;
 					$excess_package = 0;
+
+					$item_count = WC()->cart->get_cart_contents_count();
 
 					if (count($result->result->services) > 0) {
 
@@ -481,8 +484,6 @@ function fastway_au_shipping_method() {
 								 * @author Jack
 								 */
 								$postcode = $package["destination"]["postcode"];
-
-								$item_count = WC()->cart->get_cart_contents_count();
 
 								if (strstr($this->twocombozip, $postcode) === TRUE) {
 									// The Shipping post code is not found in the pre-configured zip area.
