@@ -68,8 +68,6 @@ function fastway_au_shipping_method() {
 				$this->pickup_rfcode = $this->settings['pickup_rfcode'];
 				$this->support_type = $this->settings['support_type'];
 
-				$this->twocombozip = isset($this->settings['twocombozip']) ? $this->settings['twocombozip'] : __('', 'sk8tech-fastwayau');
-
 				$this->custom_white_zone_parcel_price = $this->settings['custom_white_zone_parcel_price'];
 				$this->custom_red_zone_parcel_price = $this->settings['custom_red_zone_parcel_price'];
 				$this->custom_orange_zone_parcel_price = $this->settings['custom_orange_zone_parcel_price'];
@@ -186,12 +184,6 @@ function fastway_au_shipping_method() {
 						'type' => 'number',
 						'description' => __('No. of products to allow free shipping', 'sk8tech-fastwayau'),
 						'default' => 20,
-					),
-					'twocombozip' => array(
-						'title' => __('Two Combo ZIPs', 'sk8tech-fastwayau'),
-						'type' => 'text',
-						'description' => __('The ZIPs to enjoy free shipping when more than two combo is purchased. Use , to seperate', 'sk8tech-fastwayau'),
-						'default' => "",
 					),
 					'api_key' => array(
 						'title' => __('API Key', 'sk8tech-fastwayau'),
@@ -407,17 +399,96 @@ function fastway_au_shipping_method() {
 
 								if ($r->name == "Local") {
 									$tmp_price = $this->custom_local_parcel_price;
+
+									if ($item_count >= 1 * $this->combo) {
+
+										$rate = array(
+											'id' => $this->id . "-parcel",
+											'label' => "FREE! " . $this->title . " - Parcel (" . $result->result->delivery_timeframe_days . " Days) ",
+											'cost' => 0,
+											'taxes' => false,
+										);
+
+										$this->add_rate($rate);
+										return;
+									}
 								} else {
 									if ($r->labelcolour == "LIME") {
 										$tmp_price = $this->custom_lime_parcel_price;
+
+										if ($item_count >= 2 * $this->combo) {
+
+											$rate = array(
+												'id' => $this->id . "-parcel",
+												'label' => "FREE! " . $this->title . " - Parcel (" . $result->result->delivery_timeframe_days . " Days) ",
+												'cost' => 0,
+												'taxes' => false,
+											);
+
+											$this->add_rate($rate);
+											return;
+										}
 									} else if ($r->labelcolour == "PINK") {
 										$tmp_price = $this->custom_pink_parcel_price;
+
+										if ($item_count >= 2 * $this->combo) {
+
+											$rate = array(
+												'id' => $this->id . "-parcel",
+												'label' => "FREE! " . $this->title . " - Parcel (" . $result->result->delivery_timeframe_days . " Days) ",
+												'cost' => 0,
+												'taxes' => false,
+											);
+
+											$this->add_rate($rate);
+											return;
+										}
 									} else if ($r->labelcolour == "RED") {
 										$tmp_price = $this->custom_red_zone_parcel_price;
+
+										if ($item_count >= 2 * $this->combo) {
+
+											$rate = array(
+												'id' => $this->id . "-parcel",
+												'label' => "FREE! " . $this->title . " - Parcel (" . $result->result->delivery_timeframe_days . " Days) ",
+												'cost' => 0,
+												'taxes' => false,
+											);
+
+											$this->add_rate($rate);
+											return;
+										}
 									} else if ($r->labelcolour == "ORANGE") {
 										$tmp_price = $this->custom_orange_zone_parcel_price;
+
+										if ($item_count >= 2 * $this->combo) {
+
+											$rate = array(
+												'id' => $this->id . "-parcel",
+												'label' => "FREE! " . $this->title . " - Parcel (" . $result->result->delivery_timeframe_days . " Days) ",
+												'cost' => 0,
+												'taxes' => false,
+											);
+
+											$this->add_rate($rate);
+											return;
+										}
 									} else if ($r->labelcolour == "GREEN") {
 										$tmp_price = $this->custom_green_zone_parcel_price;
+
+										if ($item_count >= 2 * $this->combo) {
+
+											$rate = array(
+												'id' => $this->id . "-parcel",
+												'label' => "FREE! " . $this->title . " - Parcel (" . $result->result->delivery_timeframe_days . " Days) ",
+												'cost' => 0,
+												'taxes' => false,
+											);
+
+											$this->add_rate($rate);
+											return;
+										}
+
 									} else if ($r->labelcolour == "WHITE") {
 										$tmp_price = $this->custom_white_zone_parcel_price;
 									} else if ($r->labelcolour == "GREY") {
@@ -485,62 +556,14 @@ function fastway_au_shipping_method() {
 								 */
 								$postcode = $package["destination"]["postcode"];
 
-								if (strstr($this->twocombozip, $postcode) === TRUE) {
-									// The Shipping post code is not found in the pre-configured zip area.
-									// FREE SHIPPING only if item counts exceeds two combo
+								$rate = array(
+									'id' => $this->id . "-parcel",
+									'label' => $this->title . " - Parcel (" . $result->result->delivery_timeframe_days . " Days) ",
+									'cost' => $parcel_price,
+									'taxes' => false,
+								);
 
-									if ($item_count >= 2 * $this->combo) {
-
-										$rate = array(
-											'id' => $this->id . "-parcel",
-											'label' => "FREE! " . $this->title . " - Parcel (" . $result->result->delivery_timeframe_days . " Days) ",
-											'cost' => 0,
-											'taxes' => false,
-										);
-
-										$this->add_rate($rate);
-
-									} else {
-
-										$rate = array(
-											'id' => $this->id . "-parcel",
-											'label' => $this->title . " - Parcel (" . $result->result->delivery_timeframe_days . " Days) ",
-											'cost' => $parcel_price,
-											'taxes' => false,
-										);
-
-										$this->add_rate($rate);
-
-									}
-
-								} else {
-									// The Shipping post code is not found in the pre-configured zip area.
-									// FREE SHIPPING only if item counts exceeds one combo
-
-									if ($item_count >= 1 * $this->combo) {
-
-										$rate = array(
-											'id' => $this->id . "-parcel",
-											'label' => "FREE! " . $this->title . " - Parcel (" . $result->result->delivery_timeframe_days . " Days) ",
-											'cost' => 0,
-											'taxes' => false,
-										);
-
-										$this->add_rate($rate);
-
-									} else {
-
-										$rate = array(
-											'id' => $this->id . "-parcel",
-											'label' => $this->title . " - Parcel (" . $result->result->delivery_timeframe_days . " Days) ",
-											'cost' => $parcel_price,
-											'taxes' => false,
-										);
-
-										$this->add_rate($rate);
-
-									}
-								}
+								$this->add_rate($rate);
 							}
 						}
 
