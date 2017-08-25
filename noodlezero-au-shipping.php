@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Plugin Name: WooCommerce Australia Fastway Shipping Method
+ * Plugin Name: NoodleZero Australia Fastway Shipping Method
  * Plugin URI: https://sk8.tech/
  * Description: Fastway Couriers currently operates across key metropolitan and regional locations across Australia, offering a low cost and fast courier delivery service. Franchise opportunities also available.
  * Version: 1.0.5
