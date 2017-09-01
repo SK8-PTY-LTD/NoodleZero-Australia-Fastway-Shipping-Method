@@ -336,7 +336,7 @@ function fastway_au_shipping_method() {
 
 //				echo '<pre> Weight Total Before', $weight, '</pre>';
 				$weight = wc_get_weight($weight, 'kg');
-//                echo '<pre> Weight Total After', $weight, '</pre>';
+                echo '<pre> Weight Total After', $weight, '</pre>';
 
 				if ($weight == 0 || $weight > 25) {
 					return;
@@ -347,9 +347,11 @@ function fastway_au_shipping_method() {
 				$d_state = urlencode($package["destination"]["state"]);
 
 				if (empty($this->pickup_rfcode) || empty($this->api_key)) {
+                    echo '<pre> Error 1</pre>';
 					return;
 				}
 				if (empty($d_suburb) || empty($d_postcode) || empty($d_state)) {
+                    echo '<pre> Error 2</pre>';
 					return;
 				}
 
@@ -371,6 +373,7 @@ function fastway_au_shipping_method() {
 					$final_rfcode = "BRI";
 				} else {
 					// All other places, no delivery offered
+                    echo '<pre> Error 3</pre>';
 					return;
 				}
 
@@ -426,7 +429,7 @@ function fastway_au_shipping_method() {
 									$tmp_price = $this->custom_local_parcel_price;
 
 //                                    if ($item_count >= 1 * $this->combo) {
-                                    if ($weight >= 1 * $this->combo) {
+                                    if ($quantity >= 1 * $this->combo) {
 
 										$rate = array(
 											'id' => $this->id . "-parcel",
@@ -443,7 +446,7 @@ function fastway_au_shipping_method() {
 										$tmp_price = $this->custom_lime_parcel_price;
 
 //                                    if ($item_count >= 2 * $this->combo) {
-                                        if ($weight >= 2 * $this->combo) {
+                                        if ($quantity >= 2 * $this->combo) {
 
 											$rate = array(
 												'id' => $this->id . "-parcel",
@@ -459,7 +462,7 @@ function fastway_au_shipping_method() {
 										$tmp_price = $this->custom_pink_parcel_price;
 
 //                                    if ($item_count >= 2 * $this->combo) {
-                                        if ($weight >= 2 * $this->combo) {
+                                        if ($quantity >= 2 * $this->combo) {
 
 											$rate = array(
 												'id' => $this->id . "-parcel",
@@ -475,7 +478,7 @@ function fastway_au_shipping_method() {
 										$tmp_price = $this->custom_red_zone_parcel_price;
 
 //                                    if ($item_count >= 2 * $this->combo) {
-                                        if ($weight >= 2 * $this->combo) {
+                                        if ($quantity >= 2 * $this->combo) {
 
 											$rate = array(
 												'id' => $this->id . "-parcel",
@@ -491,7 +494,7 @@ function fastway_au_shipping_method() {
 										$tmp_price = $this->custom_orange_zone_parcel_price;
 
 //                                    if ($item_count >= 2 * $this->combo) {
-                                        if ($weight >= 2 * $this->combo) {
+                                        if ($quantity >= 2 * $this->combo) {
 
 											$rate = array(
 												'id' => $this->id . "-parcel",
@@ -507,7 +510,7 @@ function fastway_au_shipping_method() {
 										$tmp_price = $this->custom_green_zone_parcel_price;
 
 //                                    if ($item_count >= 2 * $this->combo) {
-                                        if ($weight >= 2 * $this->combo) {
+                                        if ($quantity >= 2 * $this->combo) {
 
 											$rate = array(
 												'id' => $this->id . "-parcel",
