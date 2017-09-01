@@ -180,7 +180,7 @@ function fastway_au_shipping_method() {
 						'default' => __('Fastway AU Shipping', 'sk8tech-fastwayau'),
 					),
                     'combo' => array(
-                        'title' => __('Combo', 'sk8tech-fastwayau'),
+                        'title' => __('Combo quantity', 'sk8tech-fastwayau'),
                         'type' => 'number',
                         'description' => __('No. of products to allow free shipping', 'sk8tech-fastwayau'),
                         'default' => 20,
