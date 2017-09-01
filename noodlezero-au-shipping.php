@@ -321,19 +321,20 @@ function fastway_au_shipping_method() {
 					return;
 				}
 
+                echo '<pre>', print_r($package), '</pre>';
+
 				foreach ($package['contents'] as $item_id => $values) {
 					$_product = $values['data'];
 					$weight = $weight + $_product->get_weight() * $values['quantity'];
 
 //                    echo '<pre>', print_r(json_encode($_product)), '</pre>';
-                    echo '<pre>', print_r($_product->bundled_data_items), '</pre>';
+                    echo '<pre>', print_r($_product['bundled_data_items']), '</pre>';
                     echo '<pre>', print_r($_product->bundled_item_quantities), '</pre>';
                     echo '<pre>', print_r($_product->bundled_item_quantities->reference), '</pre>';
                     echo '<pre>', print_r($_product->bundled_item_quantities->optimal), '</pre>';
                     echo '<pre>', print_r($_product->contains), '</pre>';
                     echo '<pre>', print_r($_product->extended_data), '</pre>';
                     echo '<pre>', print_r($_product->extended_data->sold_individually_context), '</pre>';
-                    echo '<pre>', print_r($_product->extended_data), '</pre>';
 				}
 
 				$weight = wc_get_weight($weight, 'kg');
