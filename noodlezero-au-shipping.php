@@ -314,7 +314,7 @@ function fastway_au_shipping_method() {
 			public function calculate_shipping($package = array()) {
 
 				$weight = 0;
-				$cost = 0;
+				$quantity = 0;
 				$country = $package["destination"]["country"];
 
 				if ($country != "AU") {
