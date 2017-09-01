@@ -322,7 +322,7 @@ function fastway_au_shipping_method() {
                             $item_quantity = $bundle_item['quantity'];
                             $quantity = $quantity + $item_quantity;
 
-                            echo '<pre> Quantity + ', $item_quantity, '</pre>';
+//                            echo '<pre> Quantity + ', $item_quantity, '</pre>';
                         }
                     } else {
                         //This is a simple product
@@ -330,7 +330,7 @@ function fastway_au_shipping_method() {
                         $quantity = $quantity + $item_quantity;
                     }
 
-                    echo '<pre> Quantity Total', $quantity, '</pre>';
+//                    echo '<pre> Quantity Total', $quantity, '</pre>';
 				}
 
 				$weight = wc_get_weight($weight, 'kg');
