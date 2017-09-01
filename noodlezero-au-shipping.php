@@ -306,6 +306,7 @@ function fastway_au_shipping_method() {
 				if ($country != "AU") {
 					return;
 				}
+                echo '<pre> Quantity + ', $package, '</pre>';
 
 				foreach ($package['contents'] as $item_id => $values) {
 
