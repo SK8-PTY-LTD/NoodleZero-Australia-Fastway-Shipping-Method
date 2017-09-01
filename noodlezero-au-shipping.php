@@ -59,8 +59,8 @@ function fastway_au_shipping_method() {
 				$this->enabled = isset($this->settings['enabled']) ? $this->settings['enabled'] : 'yes';
 				$this->title = isset($this->settings['title']) ? $this->settings['title'] : __('Fastway AU Shipping', 'sk8tech-fastwayau');
                 $this->combo = isset($this->settings['combo']) ? $this->settings['combo'] : __('20', 'sk8tech-fastwayau');
-                $this->one_combo_price = isset($this->settings['one_combo_price']) ? $this->settings['one_combo_price'] : __('99', 'sk8tech-fastwayau');
-                $this->two_combo_price = isset($this->settings['two_combo_price']) ? $this->settings['two_combo_price'] : __('198', 'sk8tech-fastwayau');
+                $this->one_combo_weight = isset($this->settings['one_combo_weight']) ? $this->settings['one_combo_weight'] : __('99', 'sk8tech-fastwayau');
+                $this->two_combo_weight = isset($this->settings['two_combo_weight']) ? $this->settings['two_combo_weight'] : __('198', 'sk8tech-fastwayau');
 				$this->api_key = $this->settings['api_key'];
 
 				if (empty($this->api_key)) {
@@ -187,13 +187,13 @@ function fastway_au_shipping_method() {
                         'description' => __('No. of products to allow free shipping', 'sk8tech-fastwayau'),
                         'default' => 20,
                     ),
-                    'one_combo_price' => array(
+                    'one_combo_weight' => array(
                         'title' => __('One Combo Total', 'sk8tech-fastwayau'),
                         'type' => 'number',
                         'description' => __('Total price of combos to allow free shipping', 'sk8tech-fastwayau'),
                         'default' => 99,
                     ),
-                    'two_combo_price' => array(
+                    'two_combo_weight' => array(
                         'title' => __('Two Combo Total', 'sk8tech-fastwayau'),
                         'type' => 'number',
                         'description' => __('Total price of two combos to allow free shipping', 'sk8tech-fastwayau'),
@@ -417,7 +417,7 @@ function fastway_au_shipping_method() {
 									$tmp_price = $this->custom_local_parcel_price;
 
 //                                    if ($item_count >= 1 * $this->combo) {
-                                    if ($cartTotal >= $this->one_combo_price_combo_price) {
+                                    if ($cartTotal >= $this->one_combo_weight) {
 
 										$rate = array(
 											'id' => $this->id . "-parcel",
@@ -434,7 +434,7 @@ function fastway_au_shipping_method() {
 										$tmp_price = $this->custom_lime_parcel_price;
 
 //                                    if ($item_count >= 2 * $this->combo) {
-                                        if ($cartTotal >= $this->two_combo_price_combo_price) {
+                                        if ($cartTotal >= $this->two_combo_weight) {
 
 											$rate = array(
 												'id' => $this->id . "-parcel",
@@ -450,7 +450,7 @@ function fastway_au_shipping_method() {
 										$tmp_price = $this->custom_pink_parcel_price;
 
 //                                    if ($item_count >= 2 * $this->combo) {
-                                        if ($cartTotal >= $this->two_combo_price_combo_price) {
+                                        if ($cartTotal >= $this->two_combo_weight) {
 
 											$rate = array(
 												'id' => $this->id . "-parcel",
@@ -466,7 +466,7 @@ function fastway_au_shipping_method() {
 										$tmp_price = $this->custom_red_zone_parcel_price;
 
 //                                    if ($item_count >= 2 * $this->combo) {
-                                        if ($cartTotal >= $this->two_combo_price_combo_price) {
+                                        if ($cartTotal >= $this->two_combo_weight) {
 
 											$rate = array(
 												'id' => $this->id . "-parcel",
@@ -482,7 +482,7 @@ function fastway_au_shipping_method() {
 										$tmp_price = $this->custom_orange_zone_parcel_price;
 
 //                                    if ($item_count >= 2 * $this->combo) {
-                                        if ($cartTotal >= $this->two_combo_price_combo_price) {
+                                        if ($cartTotal >= $this->two_combo_weight) {
 
 											$rate = array(
 												'id' => $this->id . "-parcel",
@@ -498,7 +498,7 @@ function fastway_au_shipping_method() {
 										$tmp_price = $this->custom_green_zone_parcel_price;
 
 //                                    if ($item_count >= 2 * $this->combo) {
-                                        if ($cartTotal >= $this->two_combo_price_combo_price) {
+                                        if ($cartTotal >= $this->two_combo_weight) {
 
 											$rate = array(
 												'id' => $this->id . "-parcel",
