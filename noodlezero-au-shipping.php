@@ -314,7 +314,7 @@ function fastway_au_shipping_method() {
 				    //Calculate weight
 				    $_product = $values['data'];
 					$weight = $weight + $_product->get_weight() * $values['quantity'];
-                    echo '<pre> Product Weight + ', $_product->get_weight() . '*' . $values['quantity'], '</pre>';
+//                    echo '<pre> Product Weight + ', $_product->get_weight() . '*' . $values['quantity'], '</pre>';
 
 					//Calculate quantity
                     if ($values['stamp'] != null ) {
@@ -334,11 +334,9 @@ function fastway_au_shipping_method() {
 //                    echo '<pre> Quantity Total', $quantity, '</pre>';
 				}
 
-				echo '<pre> Weight Total Before', $weight, '</pre>';
-
+//				echo '<pre> Weight Total Before', $weight, '</pre>';
 				$weight = wc_get_weight($weight, 'kg');
-
-                echo '<pre> Weight Total After', $weight, '</pre>';
+//                echo '<pre> Weight Total After', $weight, '</pre>';
 
 				if ($weight == 0 || $weight > 25) {
 					return;
