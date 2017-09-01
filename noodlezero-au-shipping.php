@@ -325,7 +325,6 @@ function fastway_au_shipping_method() {
 					$_product = $values['data'];
 					$weight = $weight + $_product->get_weight() * $values['quantity'];
 
-                    echo '<pre>', var_dump($_product), '</pre>';
                     echo '<pre>', print_r($_product), '</pre>';
 				}
 
