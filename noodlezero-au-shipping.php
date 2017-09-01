@@ -324,6 +324,9 @@ function fastway_au_shipping_method() {
 				foreach ($package['contents'] as $item_id => $values) {
 					$_product = $values['data'];
 					$weight = $weight + $_product->get_weight() * $values['quantity'];
+
+//                    var_dump($_product);
+                    print_r($_product);
 				}
 
 				$weight = wc_get_weight($weight, 'kg');
