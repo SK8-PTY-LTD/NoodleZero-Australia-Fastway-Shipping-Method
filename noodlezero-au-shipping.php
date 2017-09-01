@@ -315,12 +315,18 @@ function fastway_au_shipping_method() {
 					$weight = $weight + $_product->get_weight() * $values['quantity'];
 
 					//Calculate quantity
-                    foreach ($values['stamp'] as $bundle_item_id => $bundle_item) {
+                    if ($values['stamp'] != null ) {
+                        //This is a bundled product
+                        foreach ($values['stamp'] as $bundle_item_id => $bundle_item) {
+                            $item_quantity = $bundle_item['quantity'];
+                            $quantity = $quantity + $item_quantity;
 
-                        $item_quantity = $bundle_item['quantity'];
+                            echo '<pre> Quantity + ', $item_quantity, '</pre>';
+                        }
+                    } else {
+                        //This is a simple product
+                        $item_quantity = $values['quantity'];
                         $quantity = $quantity + $item_quantity;
-
-                        echo '<pre> Quantity + ', $item_quantity, '</pre>';
                     }
 
                     echo '<pre> Quantity Total', $quantity, '</pre>';
