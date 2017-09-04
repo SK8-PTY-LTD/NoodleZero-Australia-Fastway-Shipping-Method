@@ -307,14 +307,14 @@ function fastway_au_shipping_method() {
 					return;
 				}
 
-//                echo '<pre> ', print_r($package), '</pre>';
+                echo '<pre> ', print_r($package), '</pre>';
 
 				foreach ($package['contents'] as $item_id => $values) {
 
 				    //Calculate weight
 				    $_product = $values['data'];
 					$weight = $weight + $_product->get_weight() * $values['quantity'];
-                    echo '<pre> Product Weight + ', $_product->get_weight() . '*' . $values['quantity'], '</pre>';
+//                    echo '<pre> Product Weight + ', $_product->get_weight() . '*' . $values['quantity'], '</pre>';
 
 					//Calculate quantity
                     if ($values['stamp'] != null ) {
