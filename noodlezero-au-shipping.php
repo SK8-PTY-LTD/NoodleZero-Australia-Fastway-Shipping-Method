@@ -343,7 +343,9 @@ function fastway_au_shipping_method() {
 				}
 
 				$d_suburb = urlencode($package["destination"]["city"]);
+                $d_suburb = rtrim($d_suburb, " ");
 				$d_postcode = urlencode($package["destination"]["postcode"]);
+                $d_postcode = rtrim($d_postcode, " ");
 				$d_state = urlencode($package["destination"]["state"]);
 
 				if (empty($this->pickup_rfcode) || empty($this->api_key)) {
