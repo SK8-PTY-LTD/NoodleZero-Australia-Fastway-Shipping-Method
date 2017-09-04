@@ -314,7 +314,7 @@ function fastway_au_shipping_method() {
 				    //Calculate weight
 				    $_product = $values['data'];
 					$weight = $weight + $_product->get_weight() * $values['quantity'];
-//                    echo '<pre> Product Weight + ', $_product->get_weight() . '*' . $values['quantity'], '</pre>';
+                    echo '<pre> Product Weight + ', $_product->get_weight() . '*' . $values['quantity'], '</pre>';
 
 					//Calculate quantity
                     if ($values['stamp'] != null ) {
@@ -592,7 +592,8 @@ function fastway_au_shipping_method() {
 								$rate = array(
 									'id' => $this->id . "-parcel",
 									'label' => $this->title . " - Parcel (" . $result->result->delivery_timeframe_days . " Days) ",
-									'cost' => $quantity,
+                                    'cost' => $parcel_price,
+//									'cost' => $quantity,
 									'taxes' => false,
 								);
 
