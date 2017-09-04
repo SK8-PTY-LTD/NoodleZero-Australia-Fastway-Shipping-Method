@@ -315,7 +315,18 @@ function fastway_au_shipping_method() {
 //                echo '<pre> Weight Total After', $weight, '</pre>';
 
 				if ($weight == 0 || $weight > 25) {
-					return;
+
+                    $message = sprintf(__('Sorry, %d kg exceeds the maximum weight of %d kg for %s', 'fastway_au'), $weight, 25, $this->title);
+
+                    $messageType = "error";
+
+                    if (!wc_has_notice($message, $messageType)) {
+
+                        wc_add_notice($message, $messageType);
+
+                    }
+
+                    return;
 				}
 
 				$d_suburb = urlencode($package["destination"]["city"]);
