@@ -307,7 +307,7 @@ function fastway_au_shipping_method() {
 					return;
 				}
 
-                echo '<pre> ', print_r($package), '</pre>';
+//                echo '<pre> ', print_r($package), '</pre>';
 
 				foreach ($package['contents'] as $item_id => $values) {
 
@@ -319,12 +319,13 @@ function fastway_au_shipping_method() {
 					//Calculate quantity
                     if ($values['stamp'] != null ) {
                         //This is a bundled product
+                        $bundle_quantity = 0;
                         foreach ($values['stamp'] as $bundle_item_id => $bundle_item) {
                             $item_quantity = $bundle_item['quantity'];
-                            $quantity = $quantity + $item_quantity;
-
+                            $bundle_quantity = $bundle_quantity + $item_quantity;
 //                            echo '<pre> Quantity + ', $item_quantity, '</pre>';
                         }
+                        $quantity = $quantity + $bundle_quantity * $values['quantity'];
                     } else {
                         //This is a simple product
                         $item_quantity = $values['quantity'];
@@ -592,8 +593,8 @@ function fastway_au_shipping_method() {
 								$rate = array(
 									'id' => $this->id . "-parcel",
 									'label' => $this->title . " - Parcel (" . $result->result->delivery_timeframe_days . " Days) ",
-                                    'cost' => $parcel_price,
-//									'cost' => $quantity,
+//                                    'cost' => $parcel_price,
+									'cost' => $quantity,
 									'taxes' => false,
 								);
 
