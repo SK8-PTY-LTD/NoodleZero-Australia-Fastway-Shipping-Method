@@ -593,8 +593,7 @@ function fastway_au_shipping_method() {
 								$rate = array(
 									'id' => $this->id . "-parcel",
 									'label' => $this->title . " - Parcel (" . $result->result->delivery_timeframe_days . " Days) ",
-//                                    'cost' => $parcel_price,
-									'cost' => $quantity,
+                                    'cost' => $parcel_price,
 									'taxes' => false,
 								);
 
