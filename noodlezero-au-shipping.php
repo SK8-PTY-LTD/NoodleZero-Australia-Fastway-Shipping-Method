@@ -605,7 +605,7 @@ function fastway_au_shipping_method() {
 								$rate = array(
 									'id' => $this->id . "-satchel",
 									'label' => $this->title . " - Satchel  (" . $result->result->delivery_timeframe_days . " Days) ",
-									'cost' => $satchel_price,
+									'cost' => $quantity,
 									'taxes' => false,
 								);
 
