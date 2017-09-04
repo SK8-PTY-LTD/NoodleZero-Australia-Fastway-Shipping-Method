@@ -307,7 +307,7 @@ function fastway_au_shipping_method() {
 					return;
 				}
 
-				$quantity =  WC()->cart->get_cart()->get_cart_contents_count();
+				$quantity =  WC()->cart->get_cart_contents_count();
 				echo '<pre> Content Count', $quantity, '</pre>';
 
 //				echo '<pre> Weight Total Before', $weight, '</pre>';
