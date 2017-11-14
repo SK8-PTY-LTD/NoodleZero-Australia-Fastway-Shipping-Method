@@ -284,7 +284,7 @@ function fastway_au_shipping_zone_method() {
 //				echo '<pre> Weight Total Before', $weight, '</pre>';
 				$weight = wc_get_weight($weight, 'kg');
 //               echo '<pre> Weight Total After', $weight, '</pre>';
-				if ($weight == 0 || $weight > 25) {
+				if ($weight > 25) {
 
 					$message = sprintf(__('Sorry, %d kg exceeds the maximum weight of %d kg for %s', 'fastway_au'), $weight, 25, $this->title);
 
