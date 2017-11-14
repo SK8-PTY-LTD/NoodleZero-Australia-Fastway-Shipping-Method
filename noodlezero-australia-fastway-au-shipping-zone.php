@@ -1,18 +1,5 @@
 <?php
 
-/**
- * Plugin Name: NoodleZero Australia Fastway Shipping Method
- * Plugin URI: https://sk8.tech
- * Description: Fastway Couriers currently operates across key metropolitan and regional locations across Australia, offering a low cost and fast courier delivery service. Franchise opportunities also available.
- * Version: 1.2.0
- * Author: SK8Tech
- * Author URI: https://sk8.tech
- * License: GPL-3.0+
- * License URI: http://www.gnu.org/licenses/gpl-3.0.html
- * Domain Path: /lang
- * Text Domain: noodlezero-australia-fastway-shipping-method
- */
-
 if (!defined('WPINC')) {
 	die;
 }
@@ -21,71 +8,59 @@ if (!in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get
 	return false;
 }
 
-require_once "fastway-au-shipping-zone.php";
-
-if (get_option("fastway_error") !== false) {
-	add_action('admin_notices', 'fastway_au_api_error');
-}
-
-function fastway_au_curl_error() {
-	$class = 'notice notice-error';
-	$message = __('PHP Curl extension was not enabled', 'sk8tech-fastwayau');
-	printf('<div class="%1$s"><p>%2$s</p></div>', esc_attr($class), esc_html($message));
-}
-
-function fastway_au_api_error() {
-	$class = 'notice notice-error';
-	$error = get_option("fastway_error");
-	if (!empty($error)) {
-		$message = __($error, 'sk8tech-fastwayau');
-		printf('<div class="%1$s"><p>Fastway: %2$s</p></div>', esc_attr($class), esc_html($message));
-
-	}
-
-}
-
-function fastway_au_shipping_method() {
-	if (!class_exists('Fastway_Au_Shipping_Method')) {
-		class Fastway_Au_Shipping_Method extends WC_Shipping_Method {
+function fastway_au_shipping_zone_method() {
+	if (!class_exists('Fastway_Au_Shipping_Zone_Method')) {
+		class Fastway_Au_Shipping_Zone_Method extends WC_Shipping_Method {
 			var $api_key, $pickup_rfcode, $support_type, $custom_local_parcel_price;
-			public function __construct() {
-				$this->id = 'fastway_au';
+			public function __construct($instance_id = 0) {
+				$this->instance_id = absint($instance_id);
+				$this->id = 'fastway_au-zone';
 				$this->method_title = __('Fastway AU', 'sk8tech-fastwayau');
 				$this->method_description = __('Fastway Couriers currently operates across key metropolitan and regional locations across Australia, offering a low cost and fast courier delivery service. Franchise opportunities also available.<br/><strong style="color:red">Currency Of Shipping Price Is In Australian Dollar<s/trong><br/><strong style="color:black">Support URL: <a href="https://sk8.tech/" target="_blank">https://sk8.tech/</a></strong><br/><strong style="color:black">Plugin URL: <a href="https://github.com/SK8-PTY-LTD/NoodleZero-Australia-Fastway-Shipping-Method/" target="_blank">Github Repo</a></strong><br/><a href="http://au.api.fastway.org/latest/docs/page/GetAPIKey.html" target="_blank" style="font-weight:bold;">Get Fastway API Key</a> ', 'sk8tech-fastwayau');
-				$this->availability = 'including';
-				$this->countries = array(
-					'AU',
-				);
+				//$this->availability = 'including';
+
+				$this->supports = array(
+					'shipping-zones',
+					'instance-settings',
+					'instance-settings-modal');
+
+				//$this->countries = array(
+				//'AU'
+				//);
 				$this->init();
-				$this->enabled = isset($this->settings['enabled']) ? $this->settings['enabled'] : 'yes';
-				$this->title = isset($this->settings['title']) ? $this->settings['title'] : __('Fastway AU Shipping', 'sk8tech-fastwayau');
-				$this->combo = isset($this->settings['combo']) ? $this->settings['combo'] : __('20', 'sk8tech-fastwayau');
-				$this->api_key = $this->settings['api_key'];
+
+				//$this->enabled = isset( $this->settings['enabled'] ) ? $this->settings['enabled'] : 'yes';
+
+				$title = $this->get_option('title');
+
+				$this->title = !empty($title) ? $title : __('Fastway AU Shipping', 'sk8tech-fastwayau');
+
+				$this->api_key = $this->get_option('api_key');
 
 				if (empty($this->api_key)) {
 					$this->api_key = "b5056fe957ea82692b615808cfd881bc";
 				}
 
-				$this->pickup_rfcode = $this->settings['pickup_rfcode'];
-				$this->support_type = $this->settings['support_type'];
+				$this->pickup_rfcode = $this->get_option('pickup_rfcode');
+				$this->support_type = $this->get_option('support_type');
 
-				$this->custom_white_zone_parcel_price = $this->settings['custom_white_zone_parcel_price'];
-				$this->custom_red_zone_parcel_price = $this->settings['custom_red_zone_parcel_price'];
-				$this->custom_orange_zone_parcel_price = $this->settings['custom_orange_zone_parcel_price'];
-				$this->custom_green_zone_parcel_price = $this->settings['custom_green_zone_parcel_price'];
-				$this->custom_white_zone_parcel_price = $this->settings['custom_white_zone_parcel_price'];
-				$this->custom_grey_zone_parcel_price = $this->settings['custom_grey_zone_parcel_price'];
+				$this->custom_white_zone_parcel_price = $this->get_option('custom_white_zone_parcel_price');
+				$this->custom_red_zone_parcel_price = $this->get_option('custom_red_zone_parcel_price');
+				$this->custom_orange_zone_parcel_price = $this->get_option('custom_orange_zone_parcel_price');
+				$this->custom_green_zone_parcel_price = $this->get_option('custom_green_zone_parcel_price');
+				$this->custom_white_zone_parcel_price = $this->get_option('custom_white_zone_parcel_price');
+				$this->custom_grey_zone_parcel_price = $this->get_option('custom_grey_zone_parcel_price');
 
-				$this->custom_nat_a2_satchel_price = $this->settings['custom_nat_a2_satchel_price'];
-				$this->custom_nat_a3_satchel_price = $this->settings['custom_nat_a3_satchel_price'];
-				$this->custom_nat_a4_satchel_price = $this->settings['custom_nat_a4_satchel_price'];
-				$this->custom_nat_a5_satchel_price = $this->settings['custom_nat_a5_satchel_price'];
+				$this->custom_nat_a2_satchel_price = $this->get_option('custom_nat_a2_satchel_price');
+				$this->custom_nat_a3_satchel_price = $this->get_option('custom_nat_a3_satchel_price');
+				$this->custom_nat_a4_satchel_price = $this->get_option('custom_nat_a4_satchel_price');
+				$this->custom_nat_a5_satchel_price = $this->get_option('custom_nat_a5_satchel_price');
 
-				$this->custom_local_satchel_price = $this->settings['custom_local_satchel_price'];
-				$this->custom_pink_parcel_price = $this->settings['custom_pink_parcel_price'];
-				$this->custom_lime_parcel_price = $this->settings['custom_lime_parcel_price'];
-				$this->custom_local_parcel_price = $this->settings['custom_local_parcel_price'];
-				$this->custom_parcel_excess_price = $this->settings['custom_parcel_excess_price'];
+				$this->custom_local_satchel_price = $this->get_option('custom_local_satchel_price');
+				$this->custom_pink_parcel_price = $this->get_option('custom_pink_parcel_price');
+				$this->custom_lime_parcel_price = $this->get_option('custom_lime_parcel_price');
+				$this->custom_local_parcel_price = $this->get_option('custom_local_parcel_price');
+				$this->custom_parcel_excess_price = $this->get_option('custom_parcel_excess_price');
 
 			}
 
@@ -94,11 +69,12 @@ function fastway_au_shipping_method() {
 				$this->init_settings();
 				add_action('woocommerce_update_options_shipping_' . $this->id, array($this, 'process_admin_options'));
 			}
+
 			function init_form_fields() {
 
 				$rfcode = array("" => "Please Select");
 				$api_key = "";
-				$formsetting = get_option("woocommerce_fastway_au_settings");
+				$formsetting = get_option("woocommerce_fastway_au_" . $this->instance_id . "_settings");
 
 				if (is_array($formsetting) && count($formsetting) > 0) {
 					$api_key = $formsetting["api_key"];
@@ -108,7 +84,7 @@ function fastway_au_shipping_method() {
 					$api_key = "b5056fe957ea82692b615808cfd881bc";
 				}
 
-				$rfcode = get_option("rfcode");
+				$rfcode = get_option("rfcode_" . $this->instance_id);
 
 				if (!empty($rfcode)) {
 
@@ -132,25 +108,25 @@ function fastway_au_shipping_method() {
 
 						$content = curl_exec($handle);
 						$result = json_decode($content); // show target page
-						$fastway_error = get_option("fastway_error");
+						$fastway_error = get_option("fastway_error_" . $this->instance_id);
 
 						if (isset($result->error)) {
 							if ($fastway_error !== false) {
-								update_option("fastway_error", $result->error);
+								update_option("fastway_error_" . $this->instance_id, $result->error);
 							} else {
 
 								$deprecated = null;
 								$autoload = 'no';
-								add_option("fastway_error", $result->error, $deprecated, $autoload);
+								add_option("fastway_error_" . $this->instance_id, $result->error, $deprecated, $autoload);
 							}
 						} else {
 							if ($fastway_error !== false) {
-								update_option("fastway_error", "");
+								update_option("fastway_error_" . $this->instance_id, "");
 							} else {
 
 								$deprecated = null;
 								$autoload = 'no';
-								add_option("fastway_error", "", $deprecated, $autoload);
+								add_option("fastway_error_" . $this->instance_id, "", $deprecated, $autoload);
 							}
 						}
 
@@ -164,10 +140,10 @@ function fastway_au_shipping_method() {
 
 					}
 
-					add_option("rfcode", serialize($rfcode), null, 'no');
+					add_option("rfcode_" . $this->instance_id, serialize($rfcode), null, 'no');
 				}
 
-				$this->form_fields = array(
+				$this->instance_form_fields = array(
 					'enabled' => array(
 						'title' => __('Enable', 'sk8tech-fastwayau'),
 						'type' => 'checkbox',
@@ -180,12 +156,6 @@ function fastway_au_shipping_method() {
 						'description' => __('Title to be display on site', 'sk8tech-fastwayau'),
 						'default' => __('Fastway AU Shipping', 'sk8tech-fastwayau'),
 					),
-					'combo' => array(
-						'title' => __('Combo quantity', 'sk8tech-fastwayau'),
-						'type' => 'number',
-						'description' => __('No. of products to allow free shipping', 'sk8tech-fastwayau'),
-						'default' => 20,
-					),
 					'api_key' => array(
 						'title' => __('API Key', 'sk8tech-fastwayau'),
 						'type' => 'password',
@@ -193,7 +163,7 @@ function fastway_au_shipping_method() {
 						'default' => __('', 'sk8tech-fastwayau'),
 					),
 					'pickup_rfcode' => array(
-						'title' => __('Default Franchise', 'sk8tech-fastwayau'),
+						'title' => __('Pickup Franchise', 'sk8tech-fastwayau'),
 						'type' => 'select',
 						'description' => __('Options will be presented after API Key was filled and saved ', 'sk8tech-fastwayau'),
 						'default' => __('', 'sk8tech-fastwayau'),
@@ -298,12 +268,12 @@ function fastway_au_shipping_method() {
 				);
 
 			}
-			public function calculate_shipping($package = array()) {
+
+			public function calculate_shipping($package) {
 
 				$weight = 0;
 				$quantity = 0;
 				$country = $package["destination"]["country"];
-
 				if ($country != "AU") {
 					return;
 				}
@@ -313,8 +283,7 @@ function fastway_au_shipping_method() {
 
 //				echo '<pre> Weight Total Before', $weight, '</pre>';
 				$weight = wc_get_weight($weight, 'kg');
-//                echo '<pre> Weight Total After', $weight, '</pre>';
-
+//               echo '<pre> Weight Total After', $weight, '</pre>';
 				if ($weight == 0 || $weight > 25) {
 
 					$message = sprintf(__('Sorry, %d kg exceeds the maximum weight of %d kg for %s', 'fastway_au'), $weight, 25, $this->title);
@@ -365,36 +334,36 @@ function fastway_au_shipping_method() {
 				}
 
 				// Sample Reuqest: http://au.api.fastway.org/v3/psc/lookup/SYD/Ultimo/2007/20?api_key=
-				//				$handle = curl_init($url);
+				$handle = curl_init($url);
 				$url = "http://au.api.fastway.org/v3/psc/lookup/" . $final_rfcode . "/" . $d_suburb . "/" . $d_postcode . "/" . ($weight) . "?api_key=" . $this->api_key;
 				$url = str_replace('+', '%20', $url);
 				$content = file_get_contents($url);
 
 				$result = json_decode($content); // show target page
 
-				$fastway_error = get_option("fastway_error");
+				$fastway_error = get_option("fastway_error_" . $this->instance_id);
 
 				if (isset($result->error)) {
 					if ($fastway_error !== false) {
-						update_option("fastway_error", $result->error);
+						update_option("fastway_error_" . $this->instance_id, $result->error);
 
 					} else {
 
 						$deprecated = null;
 						$autoload = 'no';
-						add_option("fastway_error", $result->error, $deprecated, $autoload);
+						add_option("fastway_error_" . $this->instance_id, $result->error, $deprecated, $autoload);
 					}
 				}
 				if (isset($result->result)) {
 
 					if ($fastway_error !== false) {
-						update_option("fastway_error", "");
+						update_option("fastway_error_" . $this->instance_id, "");
 
 					} else {
 
 						$deprecated = null;
 						$autoload = 'no';
-						add_option("fastway_error", "", $deprecated, $autoload);
+						add_option("fastway_error_" . $this->instance_id, "", $deprecated, $autoload);
 					}
 					$parcel_price = 999999;
 					$satchel_price = 999999;
@@ -415,24 +384,25 @@ function fastway_au_shipping_method() {
 								if ($r->name == "Local") {
 									$tmp_price = $this->custom_local_parcel_price;
 
-//                                    if ($item_count >= 1 * $this->combo) {
-									if ($quantity >= 1 * $this->combo) {
+									if ($item_count >= 1 * $this->combo) {
+										if ($quantity >= 1 * $this->combo) {
 
-										$rate = array(
-											'id' => $this->id . "-parcel",
-											'label' => "FREE! " . $this->title . " - Parcel (" . $result->result->delivery_timeframe_days . " Days) ",
-											'cost' => 0,
-											'taxes' => false,
-										);
+											$rate = array(
+												'id' => $this->id . "-parcel",
+												'label' => "FREE! " . $this->title . " - Parcel (" . $result->result->delivery_timeframe_days . " Days) ",
+												'cost' => 0,
+												'taxes' => false,
+											);
 
-										$this->add_rate($rate);
-										return;
+											$this->add_rate($rate);
+											return;
+										}
 									}
 								} else {
 									if ($r->labelcolour == "LIME") {
 										$tmp_price = $this->custom_lime_parcel_price;
 
-//                                    if ($item_count >= 2 * $this->combo) {
+//                                      if ($item_count >= 2 * $this->combo) {
 										if ($quantity >= 2 * $this->combo) {
 
 											$rate = array(
@@ -448,7 +418,7 @@ function fastway_au_shipping_method() {
 									} else if ($r->labelcolour == "PINK") {
 										$tmp_price = $this->custom_pink_parcel_price;
 
-//                                    if ($item_count >= 2 * $this->combo) {
+//                                      if ($item_count >= 2 * $this->combo) {
 										if ($quantity >= 2 * $this->combo) {
 
 											$rate = array(
@@ -464,7 +434,7 @@ function fastway_au_shipping_method() {
 									} else if ($r->labelcolour == "RED") {
 										$tmp_price = $this->custom_red_zone_parcel_price;
 
-//                                    if ($item_count >= 2 * $this->combo) {
+//                                      if ($item_count >= 2 * $this->combo) {
 										if ($quantity >= 2 * $this->combo) {
 
 											$rate = array(
@@ -480,7 +450,7 @@ function fastway_au_shipping_method() {
 									} else if ($r->labelcolour == "ORANGE") {
 										$tmp_price = $this->custom_orange_zone_parcel_price;
 
-//                                    if ($item_count >= 2 * $this->combo) {
+//                                      if ($item_count >= 2 * $this->combo) {
 										if ($quantity >= 2 * $this->combo) {
 
 											$rate = array(
@@ -496,7 +466,7 @@ function fastway_au_shipping_method() {
 									} else if ($r->labelcolour == "GREEN") {
 										$tmp_price = $this->custom_green_zone_parcel_price;
 
-//                                    if ($item_count >= 2 * $this->combo) {
+//                                   if ($item_count >= 2 * $this->combo) {
 										if ($quantity >= 2 * $this->combo) {
 
 											$rate = array(
@@ -509,9 +479,9 @@ function fastway_au_shipping_method() {
 											$this->add_rate($rate);
 											return;
 										}
-
 									} else if ($r->labelcolour == "WHITE") {
 										$tmp_price = $this->custom_white_zone_parcel_price;
+
 									} else if ($r->labelcolour == "GREY") {
 										$tmp_price = $this->custom_grey_zone_parcel_price;
 									}
@@ -570,13 +540,6 @@ function fastway_au_shipping_method() {
 
 						if (empty($this->support_type) || $this->support_type == "Parcel") {
 							if ($parcel_price != 999999) {
-
-								/**
-								 * Use Postcode/ZIP to determine if this method applies
-								 * @author Jack
-								 */
-								$postcode = $package["destination"]["postcode"];
-
 								$rate = array(
 									'id' => $this->id . "-parcel",
 									'label' => $this->title . " - Parcel (" . $result->result->delivery_timeframe_days . " Days) ",
@@ -608,13 +571,11 @@ function fastway_au_shipping_method() {
 	}
 }
 
-add_action('woocommerce_shipping_init', 'fastway_au_shipping_method');
+add_action('woocommerce_shipping_init', 'fastway_au_shipping_zone_method');
 
-function add_fastway_au_shipping_method($methods) {
-	$methods[] = 'Fastway_Au_Shipping_Method';
+function add_fastway_au_shipping_zone_method($methods) {
+	$methods['fastway_au-zone'] = 'Fastway_Au_Shipping_Zone_Method';
 	return $methods;
 }
 
-add_filter('woocommerce_shipping_methods', 'add_fastway_au_shipping_method');
-
-add_filter('woocommerce_shipping_calculator_enable_city', '__return_true');
+add_filter('woocommerce_shipping_methods', 'add_fastway_au_shipping_zone_method');

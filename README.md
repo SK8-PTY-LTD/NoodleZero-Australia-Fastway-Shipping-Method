@@ -19,6 +19,7 @@ License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Fastway Couriers currently operates across key metropolitan and regional locations across Australia, offering a low cost and fast courier delivery service. Franchise opportunities also available.
 
 * Calculate estimate delivery times and postage costs based on postcode and suburb
+* Support shipping zone
 
 == Installation ==
 
@@ -28,6 +29,9 @@ Fastway Couriers currently operates across key metropolitan and regional locatio
 
 
 == Changelog ==
+
+= 1.2.0 =
+Support shipping zone
 
 = 1.1.0 =
 
