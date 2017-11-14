@@ -21,7 +21,7 @@ if (!in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get
 	return false;
 }
 
-require_once "fastway-au-shipping-zone.php";
+require_once "noodlezero-australia-fastway-au-shipping-zone.php";
 
 if (get_option("fastway_error") !== false) {
 	add_action('admin_notices', 'fastway_au_api_error');
