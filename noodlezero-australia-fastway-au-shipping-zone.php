@@ -269,7 +269,7 @@ function fastway_au_shipping_zone_method() {
 
 			}
 
-			public function calculate_shipping($package) {
+			public function calculate_shipping($package = array()) {
 
 				$weight = 0;
 				$quantity = 0;
