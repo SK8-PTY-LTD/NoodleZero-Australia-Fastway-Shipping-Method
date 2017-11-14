@@ -24,9 +24,10 @@ function fastway_au_shipping_zone_method() {
 					'instance-settings',
 					'instance-settings-modal');
 
-				//$this->countries = array(
-				//'AU'
-				//);
+				// $this->countries = array(
+				// 	'AU',
+				// 	'NZ',
+				// );
 				$this->init();
 
 				//$this->enabled = isset( $this->settings['enabled'] ) ? $this->settings['enabled'] : 'yes';
@@ -273,8 +274,9 @@ function fastway_au_shipping_zone_method() {
 
 				$weight = 0;
 				$quantity = 0;
+
 				$country = $package["destination"]["country"];
-				if ($country != "AU") {
+				if ($country != "AU" && $country != "NZ") {
 					return;
 				}
 
@@ -304,6 +306,7 @@ function fastway_au_shipping_zone_method() {
 				$d_postcode = urlencode($package["destination"]["postcode"]);
 				$d_postcode = rtrim($d_postcode, " ");
 				$d_state = urlencode($package["destination"]["state"]);
+				$d_country = urlencode($package["destination"]["country"]);
 
 				if (empty($this->pickup_rfcode) || empty($this->api_key)) {
 					return;
@@ -317,17 +320,25 @@ function fastway_au_shipping_zone_method() {
 				 * @author Jack
 				 */
 				$final_rfcode = $this->pickup_rfcode;
-				if ($d_state == "Victoria" || $d_state == "VIC") {
-					// All packages destinationed to Victoria should be delivered from Melbourne. Therefore calculate the delivery fee from MEL
-					$final_rfcode = "MEL";
-				} else if ($d_state == "NSW" ||
-					$d_state == "TAS" ||
-					$d_state == "ACT") {
-					// All packages destinationed to Victoria should be delivered from Melbourne. Therefore calculate the delivery fee from SYD
-					$final_rfcode = "SYD";
-				} else if ($d_state == "QLD") {
-					// All packages destinationed to Victoria should be delivered from Melbourne. Therefore calculate the delivery fee from BRI
-					$final_rfcode = "BRI";
+				if ($d_country == "Australia" || $d_country == "AU") {
+					if ($d_state == "Victoria" || $d_state == "VIC") {
+						// All packages destinationed to Victoria should be delivered from Melbourne. Therefore calculate the delivery fee from MEL
+						$final_rfcode = "MEL";
+					} else if ($d_state == "NSW" ||
+						$d_state == "TAS" ||
+						$d_state == "ACT") {
+						// All packages destinationed to Victoria should be delivered from Melbourne. Therefore calculate the delivery fee from SYD
+						$final_rfcode = "SYD";
+					} else if ($d_state == "QLD") {
+						// All packages destinationed to Victoria should be delivered from Melbourne. Therefore calculate the delivery fee from BRI
+						$final_rfcode = "BRI";
+					} else {
+						// All other places, no delivery offered
+						return;
+					}
+				} else if ($d_country == "New Zealand" || $d_country == "NZ") {
+					// All packages destinationed to any state in New Zealand should be delivered from Auckland. Therefore calculate the delivery fee from AUK
+					$final_rfcode = "AUK";
 				} else {
 					// All other places, no delivery offered
 					return;
