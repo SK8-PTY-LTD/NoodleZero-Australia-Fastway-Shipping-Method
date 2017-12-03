@@ -417,7 +417,8 @@ function fastway_au_shipping_method() {
 
 						foreach ($result->result->services as $k => $r) {
 
-							if ($r->type == "Parcel") {
+							if ($r->type == "Parcel" && $r->type != "Road (0-2kg)") {
+								// Excluding "Road (0-2kg)" from New Zealand Fastway
 
 								$tmp_price = "";
 								// $exc_price = $this->custom_parcel_excess_price;
@@ -428,23 +429,8 @@ function fastway_au_shipping_method() {
 									// $tmp_price = $this->custom_local_parcel_price;
 
 									// if ($item_count >= 1 * $this->combo) {
-									if ($quantity >= 1 * $this->combo) {
-
-										$rate = array(
-											'id' => $this->id . "-parcel",
-											'label' => "FREE! " . $this->title . " - Parcel (" . $result->result->delivery_timeframe_days . " Days) ",
-											'cost' => 0,
-											'taxes' => false,
-										);
-
-										$this->add_rate($rate);
-										return;
-									}
-								} else {
-									if ($r->labelcolour == "LIME") {
-										// $tmp_price = $this->custom_lime_parcel_price;
-										// if ($item_count >= 2 * $this->combo) {
-										if ($quantity >= 2 * $this->combo) {
+									if ($d_country == "Australia" || $d_country == "AU") {
+										if ($quantity >= 1 * $this->combo) {
 
 											$rate = array(
 												'id' => $this->id . "-parcel",
@@ -452,6 +438,66 @@ function fastway_au_shipping_method() {
 												'cost' => 0,
 												'taxes' => false,
 											);
+
+											$this->add_rate($rate);
+											return;
+										}
+									} else if ($d_country == "New Zealand" || $d_country == "NZ") {
+									} else {
+									}
+								} else {
+									if ($r->labelcolour == "LIME") {
+										// $tmp_price = $this->custom_lime_parcel_price;
+										// if ($item_count >= 2 * $this->combo) {
+										if ($d_country == "Australia" || $d_country == "AU") {
+											if ($quantity >= 2 * $this->combo) {
+
+												$rate = array(
+													'id' => $this->id . "-parcel",
+													'label' => "FREE! " . $this->title . " - Parcel (" . $result->result->delivery_timeframe_days . " Days) ",
+													'cost' => 0,
+													'taxes' => false,
+												);
+											} else if ($d_country == "New Zealand" || $d_country == "NZ") {
+												if ($quantity >= 1 * $this->combo) {
+
+													$rate = array(
+														'id' => $this->id . "-parcel",
+														'label' => "FREE! " . $this->title . " - Parcel (" . $result->result->delivery_timeframe_days . " Days) ",
+														'cost' => 0,
+														'taxes' => false,
+													);
+
+													$this->add_rate($rate);
+													return;
+												}
+											} else {
+											}
+
+											$this->add_rate($rate);
+											return;
+										}
+									} else if ($r->labelcolour == "BLUE") {
+										// $tmp_price = $this->custom_lime_parcel_price;
+										// if ($item_count >= 2 * $this->combo) {
+										if ($d_country == "Australia" || $d_country == "AU") {
+											if ($quantity >= 2 * $this->combo) {
+												// Not set
+											} else if ($d_country == "New Zealand" || $d_country == "NZ") {
+												if ($quantity >= 1 * $this->combo) {
+
+													$rate = array(
+														'id' => $this->id . "-parcel",
+														'label' => "FREE! " . $this->title . " - Parcel (" . $result->result->delivery_timeframe_days . " Days) ",
+														'cost' => 0,
+														'taxes' => false,
+													);
+
+													$this->add_rate($rate);
+													return;
+												}
+											} else {
+											}
 
 											$this->add_rate($rate);
 											return;
@@ -459,62 +505,122 @@ function fastway_au_shipping_method() {
 									} else if ($r->labelcolour == "PINK") {
 										// $tmp_price = $this->custom_pink_parcel_price;
 										// if ($item_count >= 2 * $this->combo) {
-										if ($quantity >= 2 * $this->combo) {
+										if ($d_country == "Australia" || $d_country == "AU") {
+											if ($quantity >= 2 * $this->combo) {
 
-											$rate = array(
-												'id' => $this->id . "-parcel",
-												'label' => "FREE! " . $this->title . " - Parcel (" . $result->result->delivery_timeframe_days . " Days) ",
-												'cost' => 0,
-												'taxes' => false,
-											);
+												$rate = array(
+													'id' => $this->id . "-parcel",
+													'label' => "FREE! " . $this->title . " - Parcel (" . $result->result->delivery_timeframe_days . " Days) ",
+													'cost' => 0,
+													'taxes' => false,
+												);
 
-											$this->add_rate($rate);
-											return;
+												$this->add_rate($rate);
+												return;
+											}
+										} else if ($d_country == "New Zealand" || $d_country == "NZ") {
+											if ($quantity >= 1 * $this->combo) {
+
+												$rate = array(
+													'id' => $this->id . "-parcel",
+													'label' => "FREE! " . $this->title . " - Parcel (" . $result->result->delivery_timeframe_days . " Days) ",
+													'cost' => 0,
+													'taxes' => false,
+												);
+
+												$this->add_rate($rate);
+												return;
+											}
+										} else {
 										}
 									} else if ($r->labelcolour == "RED") {
 										// $tmp_price = $this->custom_red_zone_parcel_price;
 										// if ($item_count >= 2 * $this->combo) {
-										if ($quantity >= 2 * $this->combo) {
+										if ($d_country == "Australia" || $d_country == "AU") {
+											if ($quantity >= 2 * $this->combo) {
 
-											$rate = array(
-												'id' => $this->id . "-parcel",
-												'label' => "FREE! " . $this->title . " - Parcel (" . $result->result->delivery_timeframe_days . " Days) ",
-												'cost' => 0,
-												'taxes' => false,
-											);
+												$rate = array(
+													'id' => $this->id . "-parcel",
+													'label' => "FREE! " . $this->title . " - Parcel (" . $result->result->delivery_timeframe_days . " Days) ",
+													'cost' => 0,
+													'taxes' => false,
+												);
 
-											$this->add_rate($rate);
-											return;
+												$this->add_rate($rate);
+												return;
+											}
+										} else if ($d_country == "New Zealand" || $d_country == "NZ") {
+										} else {
 										}
 									} else if ($r->labelcolour == "ORANGE") {
 										// $tmp_price = $this->custom_orange_zone_parcel_price;
 										// if ($item_count >= 2 * $this->combo) {
-										if ($quantity >= 2 * $this->combo) {
+										if ($d_country == "Australia" || $d_country == "AU") {
+											if ($quantity >= 2 * $this->combo) {
 
-											$rate = array(
-												'id' => $this->id . "-parcel",
-												'label' => "FREE! " . $this->title . " - Parcel (" . $result->result->delivery_timeframe_days . " Days) ",
-												'cost' => 0,
-												'taxes' => false,
-											);
+												$rate = array(
+													'id' => $this->id . "-parcel",
+													'label' => "FREE! " . $this->title . " - Parcel (" . $result->result->delivery_timeframe_days . " Days) ",
+													'cost' => 0,
+													'taxes' => false,
+												);
 
-											$this->add_rate($rate);
-											return;
+												$this->add_rate($rate);
+												return;
+											}
+										} else if ($d_country == "New Zealand" || $d_country == "NZ") {
+											if ($quantity >= 2 * $this->combo) {
+
+												$rate = array(
+													'id' => $this->id . "-parcel",
+													'label' => "FREE! " . $this->title . " - Parcel (" . $result->result->delivery_timeframe_days . " Days) ",
+													'cost' => 0,
+													'taxes' => false,
+												);
+
+												$this->add_rate($rate);
+												return;
+											}
+										} else {
+										}
+									} else if ($r->labelcolour == "YELLOW") {
+										// $tmp_price = $this->custom_orange_zone_parcel_price;
+										// if ($item_count >= 2 * $this->combo) {
+										if ($d_country == "Australia" || $d_country == "AU") {
+											// Not set
+										} else if ($d_country == "New Zealand" || $d_country == "NZ") {
+											if ($quantity >= 2 * $this->combo) {
+
+												$rate = array(
+													'id' => $this->id . "-parcel",
+													'label' => "FREE! " . $this->title . " - Parcel (" . $result->result->delivery_timeframe_days . " Days) ",
+													'cost' => 0,
+													'taxes' => false,
+												);
+
+												$this->add_rate($rate);
+												return;
+											}
+										} else {
 										}
 									} else if ($r->labelcolour == "GREEN") {
 										// $tmp_price = $this->custom_green_zone_parcel_price;
 										// if ($item_count >= 2 * $this->combo) {
-										if ($quantity >= 2 * $this->combo) {
+										if ($d_country == "Australia" || $d_country == "AU") {
+											if ($quantity >= 2 * $this->combo) {
 
-											$rate = array(
-												'id' => $this->id . "-parcel",
-												'label' => "FREE! " . $this->title . " - Parcel (" . $result->result->delivery_timeframe_days . " Days) ",
-												'cost' => 0,
-												'taxes' => false,
-											);
+												$rate = array(
+													'id' => $this->id . "-parcel",
+													'label' => "FREE! " . $this->title . " - Parcel (" . $result->result->delivery_timeframe_days . " Days) ",
+													'cost' => 0,
+													'taxes' => false,
+												);
 
-											$this->add_rate($rate);
-											return;
+												$this->add_rate($rate);
+												return;
+											}
+										} else if ($d_country == "New Zealand" || $d_country == "NZ") {
+										} else {
 										}
 									} else if ($r->labelcolour == "WHITE") {
 										// $tmp_price = $this->custom_white_zone_parcel_price;
