@@ -387,7 +387,7 @@ function fastway_au_shipping_zone_method() {
 
 						foreach ($result->result->services as $k => $r) {
 
-							if ($r->type == "Parcel" && $r->type != "Road (0-2kg)") {
+							if ($r->type == "Parcel" && $r->name != "Road (0-2kg)") {
 								// Excluding "Road (0-2kg)" from New Zealand Fastway
 
 								$tmp_price = "";
