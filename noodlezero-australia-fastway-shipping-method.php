@@ -70,23 +70,23 @@ function fastway_au_shipping_method() {
 				$this->pickup_rfcode = $this->settings['pickup_rfcode'];
 				$this->support_type = $this->settings['support_type'];
 
-				$this->custom_white_zone_parcel_price = $this->settings['custom_white_zone_parcel_price'];
-				$this->custom_red_zone_parcel_price = $this->settings['custom_red_zone_parcel_price'];
-				$this->custom_orange_zone_parcel_price = $this->settings['custom_orange_zone_parcel_price'];
-				$this->custom_green_zone_parcel_price = $this->settings['custom_green_zone_parcel_price'];
-				$this->custom_white_zone_parcel_price = $this->settings['custom_white_zone_parcel_price'];
-				$this->custom_grey_zone_parcel_price = $this->settings['custom_grey_zone_parcel_price'];
+				// $this->custom_white_zone_parcel_price = $this->settings['custom_white_zone_parcel_price'];
+				// $this->custom_red_zone_parcel_price = $this->settings['custom_red_zone_parcel_price'];
+				// $this->custom_orange_zone_parcel_price = $this->settings['custom_orange_zone_parcel_price'];
+				// $this->custom_green_zone_parcel_price = $this->settings['custom_green_zone_parcel_price'];
+				// $this->custom_white_zone_parcel_price = $this->settings['custom_white_zone_parcel_price'];
+				// $this->custom_grey_zone_parcel_price = $this->settings['custom_grey_zone_parcel_price'];
 
-				$this->custom_nat_a2_satchel_price = $this->settings['custom_nat_a2_satchel_price'];
-				$this->custom_nat_a3_satchel_price = $this->settings['custom_nat_a3_satchel_price'];
-				$this->custom_nat_a4_satchel_price = $this->settings['custom_nat_a4_satchel_price'];
-				$this->custom_nat_a5_satchel_price = $this->settings['custom_nat_a5_satchel_price'];
+				// $this->custom_nat_a2_satchel_price = $this->settings['custom_nat_a2_satchel_price'];
+				// $this->custom_nat_a3_satchel_price = $this->settings['custom_nat_a3_satchel_price'];
+				// $this->custom_nat_a4_satchel_price = $this->settings['custom_nat_a4_satchel_price'];
+				// $this->custom_nat_a5_satchel_price = $this->settings['custom_nat_a5_satchel_price'];
 
-				$this->custom_local_satchel_price = $this->settings['custom_local_satchel_price'];
-				$this->custom_pink_parcel_price = $this->settings['custom_pink_parcel_price'];
-				$this->custom_lime_parcel_price = $this->settings['custom_lime_parcel_price'];
-				$this->custom_local_parcel_price = $this->settings['custom_local_parcel_price'];
-				$this->custom_parcel_excess_price = $this->settings['custom_parcel_excess_price'];
+				// $this->custom_local_satchel_price = $this->settings['custom_local_satchel_price'];
+				// $this->custom_pink_parcel_price = $this->settings['custom_pink_parcel_price'];
+				// $this->custom_lime_parcel_price = $this->settings['custom_lime_parcel_price'];
+				// $this->custom_local_parcel_price = $this->settings['custom_local_parcel_price'];
+				// $this->custom_parcel_excess_price = $this->settings['custom_parcel_excess_price'];
 
 			}
 
@@ -207,94 +207,94 @@ function fastway_au_shipping_method() {
 						'default' => __('', 'sk8tech-fastwayau'),
 						'options' => array("" => "All", "Parcel" => "Parcel", "Satchel" => "Satchel"),
 					),
-					'custom_local_parcel_price' => array(
-						'title' => __('Custom Local Parcel Price', 'sk8tech-fastwayau'),
-						'type' => 'decimal',
-						'description' => __('', 'sk8tech-fastwayau'),
-						'default' => __('', 'sk8tech-fastwayau'),
-					),
-					'custom_lime_parcel_price' => array(
-						'title' => __('Custom Lime Parcel Price', 'sk8tech-fastwayau'),
-						'type' => 'decimal',
-						'description' => __('', 'sk8tech-fastwayau'),
-						'default' => __('', 'sk8tech-fastwayau'),
-					),
-					'custom_pink_parcel_price' => array(
-						'title' => __('Custom Pink Parcel Price', 'sk8tech-fastwayau'),
-						'type' => 'decimal',
-						'description' => __('', 'sk8tech-fastwayau'),
-						'default' => __('', 'sk8tech-fastwayau'),
-					),
-					'custom_red_zone_parcel_price' => array(
-						'title' => __('Custom Red Zone Parcel Price', 'sk8tech-fastwayau'),
-						'type' => 'decimal',
-						'description' => __('', 'sk8tech-fastwayau'),
-						'default' => __('', 'sk8tech-fastwayau'),
-					),
+					// 'custom_local_parcel_price' => array(
+					// 	'title' => __('Custom Local Parcel Price', 'sk8tech-fastwayau'),
+					// 	'type' => 'decimal',
+					// 	'description' => __('', 'sk8tech-fastwayau'),
+					// 	'default' => __('', 'sk8tech-fastwayau'),
+					// ),
+					// 'custom_lime_parcel_price' => array(
+					// 	'title' => __('Custom Lime Parcel Price', 'sk8tech-fastwayau'),
+					// 	'type' => 'decimal',
+					// 	'description' => __('', 'sk8tech-fastwayau'),
+					// 	'default' => __('', 'sk8tech-fastwayau'),
+					// ),
+					// 'custom_pink_parcel_price' => array(
+					// 	'title' => __('Custom Pink Parcel Price', 'sk8tech-fastwayau'),
+					// 	'type' => 'decimal',
+					// 	'description' => __('', 'sk8tech-fastwayau'),
+					// 	'default' => __('', 'sk8tech-fastwayau'),
+					// ),
+					// 'custom_red_zone_parcel_price' => array(
+					// 	'title' => __('Custom Red Zone Parcel Price', 'sk8tech-fastwayau'),
+					// 	'type' => 'decimal',
+					// 	'description' => __('', 'sk8tech-fastwayau'),
+					// 	'default' => __('', 'sk8tech-fastwayau'),
+					// ),
 
-					'custom_orange_zone_parcel_price' => array(
-						'title' => __('Custom Orange Zone Parcel Price', 'sk8tech-fastwayau'),
-						'type' => 'decimal',
-						'description' => __('', 'sk8tech-fastwayau'),
-						'default' => __('', 'sk8tech-fastwayau'),
-					),
+					// 'custom_orange_zone_parcel_price' => array(
+					// 	'title' => __('Custom Orange Zone Parcel Price', 'sk8tech-fastwayau'),
+					// 	'type' => 'decimal',
+					// 	'description' => __('', 'sk8tech-fastwayau'),
+					// 	'default' => __('', 'sk8tech-fastwayau'),
+					// ),
 
-					'custom_green_zone_parcel_price' => array(
-						'title' => __('Custom Green Zone Parcel Price', 'sk8tech-fastwayau'),
-						'type' => 'decimal',
-						'description' => __('', 'sk8tech-fastwayau'),
-						'default' => __('', 'sk8tech-fastwayau'),
-					),
+					// 'custom_green_zone_parcel_price' => array(
+					// 	'title' => __('Custom Green Zone Parcel Price', 'sk8tech-fastwayau'),
+					// 	'type' => 'decimal',
+					// 	'description' => __('', 'sk8tech-fastwayau'),
+					// 	'default' => __('', 'sk8tech-fastwayau'),
+					// ),
 
-					'custom_white_zone_parcel_price' => array(
-						'title' => __('Custom White Zone Parcel Price', 'sk8tech-fastwayau'),
-						'type' => 'decimal',
-						'description' => __('', 'sk8tech-fastwayau'),
-						'default' => __('', 'sk8tech-fastwayau'),
-					),
+					// 'custom_white_zone_parcel_price' => array(
+					// 	'title' => __('Custom White Zone Parcel Price', 'sk8tech-fastwayau'),
+					// 	'type' => 'decimal',
+					// 	'description' => __('', 'sk8tech-fastwayau'),
+					// 	'default' => __('', 'sk8tech-fastwayau'),
+					// ),
 
-					'custom_grey_zone_parcel_price' => array(
-						'title' => __('Custom Grey Zone Parcel Price', 'sk8tech-fastwayau'),
-						'type' => 'decimal',
-						'description' => __('', 'sk8tech-fastwayau'),
-						'default' => __('', 'sk8tech-fastwayau'),
-					),
-					'custom_parcel_excess_price' => array(
-						'title' => __('Custom Parcel Excess Price', 'sk8tech-fastwayau'),
-						'type' => 'decimal',
-						'description' => __('', 'sk8tech-fastwayau'),
-						'default' => __('', 'sk8tech-fastwayau'),
-					),
-					'custom_local_satchel_price' => array(
-						'title' => __('Custom Local Satchel Price', 'sk8tech-fastwayau'),
-						'type' => 'decimal',
-						'description' => __('', 'sk8tech-fastwayau'),
-						'default' => __('', 'sk8tech-fastwayau'),
-					),
-					'custom_nat_a5_satchel_price' => array(
-						'title' => __('Custom National A5 Satchel Price', 'sk8tech-fastwayau'),
-						'type' => 'decimal',
-						'description' => __('', 'sk8tech-fastwayau'),
-						'default' => __('', 'sk8tech-fastwayau'),
-					),
-					'custom_nat_a4_satchel_price' => array(
-						'title' => __('Custom National A4 Satchel Price', 'sk8tech-fastwayau'),
-						'type' => 'decimal',
-						'description' => __('', 'sk8tech-fastwayau'),
-						'default' => __('', 'sk8tech-fastwayau'),
-					),
-					'custom_nat_a3_satchel_price' => array(
-						'title' => __('Custom National A3 Satchel Price', 'sk8tech-fastwayau'),
-						'type' => 'decimal',
-						'description' => __('', 'sk8tech-fastwayau'),
-						'default' => __('', 'sk8tech-fastwayau'),
-					),
-					'custom_nat_a2_satchel_price' => array(
-						'title' => __('Custom National A2 Satchel Price', 'sk8tech-fastwayau'),
-						'type' => 'decimal',
-						'description' => __('', 'sk8tech-fastwayau'),
-						'default' => __('', 'sk8tech-fastwayau'),
-					),
+					// 'custom_grey_zone_parcel_price' => array(
+					// 	'title' => __('Custom Grey Zone Parcel Price', 'sk8tech-fastwayau'),
+					// 	'type' => 'decimal',
+					// 	'description' => __('', 'sk8tech-fastwayau'),
+					// 	'default' => __('', 'sk8tech-fastwayau'),
+					// ),
+					// 'custom_parcel_excess_price' => array(
+					// 	'title' => __('Custom Parcel Excess Price', 'sk8tech-fastwayau'),
+					// 	'type' => 'decimal',
+					// 	'description' => __('', 'sk8tech-fastwayau'),
+					// 	'default' => __('', 'sk8tech-fastwayau'),
+					// ),
+					// 'custom_local_satchel_price' => array(
+					// 	'title' => __('Custom Local Satchel Price', 'sk8tech-fastwayau'),
+					// 	'type' => 'decimal',
+					// 	'description' => __('', 'sk8tech-fastwayau'),
+					// 	'default' => __('', 'sk8tech-fastwayau'),
+					// ),
+					// 'custom_nat_a5_satchel_price' => array(
+					// 	'title' => __('Custom National A5 Satchel Price', 'sk8tech-fastwayau'),
+					// 	'type' => 'decimal',
+					// 	'description' => __('', 'sk8tech-fastwayau'),
+					// 	'default' => __('', 'sk8tech-fastwayau'),
+					// ),
+					// 'custom_nat_a4_satchel_price' => array(
+					// 	'title' => __('Custom National A4 Satchel Price', 'sk8tech-fastwayau'),
+					// 	'type' => 'decimal',
+					// 	'description' => __('', 'sk8tech-fastwayau'),
+					// 	'default' => __('', 'sk8tech-fastwayau'),
+					// ),
+					// 'custom_nat_a3_satchel_price' => array(
+					// 	'title' => __('Custom National A3 Satchel Price', 'sk8tech-fastwayau'),
+					// 	'type' => 'decimal',
+					// 	'description' => __('', 'sk8tech-fastwayau'),
+					// 	'default' => __('', 'sk8tech-fastwayau'),
+					// ),
+					// 'custom_nat_a2_satchel_price' => array(
+					// 	'title' => __('Custom National A2 Satchel Price', 'sk8tech-fastwayau'),
+					// 	'type' => 'decimal',
+					// 	'description' => __('', 'sk8tech-fastwayau'),
+					// 	'default' => __('', 'sk8tech-fastwayau'),
+					// ),
 
 				);
 
@@ -420,12 +420,14 @@ function fastway_au_shipping_method() {
 							if ($r->type == "Parcel") {
 
 								$tmp_price = "";
-								$exc_price = $this->custom_parcel_excess_price;
+								// $exc_price = $this->custom_parcel_excess_price;
+
+								$exc_price = $r->excess_label_price_frequent;
 
 								if ($r->name == "Local") {
-									$tmp_price = $this->custom_local_parcel_price;
+									// $tmp_price = $this->custom_local_parcel_price;
 
-//                                    if ($item_count >= 1 * $this->combo) {
+									// if ($item_count >= 1 * $this->combo) {
 									if ($quantity >= 1 * $this->combo) {
 
 										$rate = array(
@@ -440,9 +442,8 @@ function fastway_au_shipping_method() {
 									}
 								} else {
 									if ($r->labelcolour == "LIME") {
-										$tmp_price = $this->custom_lime_parcel_price;
-
-//                                    if ($item_count >= 2 * $this->combo) {
+										// $tmp_price = $this->custom_lime_parcel_price;
+										// if ($item_count >= 2 * $this->combo) {
 										if ($quantity >= 2 * $this->combo) {
 
 											$rate = array(
@@ -456,9 +457,8 @@ function fastway_au_shipping_method() {
 											return;
 										}
 									} else if ($r->labelcolour == "PINK") {
-										$tmp_price = $this->custom_pink_parcel_price;
-
-//                                    if ($item_count >= 2 * $this->combo) {
+										// $tmp_price = $this->custom_pink_parcel_price;
+										// if ($item_count >= 2 * $this->combo) {
 										if ($quantity >= 2 * $this->combo) {
 
 											$rate = array(
@@ -472,9 +472,8 @@ function fastway_au_shipping_method() {
 											return;
 										}
 									} else if ($r->labelcolour == "RED") {
-										$tmp_price = $this->custom_red_zone_parcel_price;
-
-//                                    if ($item_count >= 2 * $this->combo) {
+										// $tmp_price = $this->custom_red_zone_parcel_price;
+										// if ($item_count >= 2 * $this->combo) {
 										if ($quantity >= 2 * $this->combo) {
 
 											$rate = array(
@@ -488,9 +487,8 @@ function fastway_au_shipping_method() {
 											return;
 										}
 									} else if ($r->labelcolour == "ORANGE") {
-										$tmp_price = $this->custom_orange_zone_parcel_price;
-
-//                                    if ($item_count >= 2 * $this->combo) {
+										// $tmp_price = $this->custom_orange_zone_parcel_price;
+										// if ($item_count >= 2 * $this->combo) {
 										if ($quantity >= 2 * $this->combo) {
 
 											$rate = array(
@@ -504,9 +502,8 @@ function fastway_au_shipping_method() {
 											return;
 										}
 									} else if ($r->labelcolour == "GREEN") {
-										$tmp_price = $this->custom_green_zone_parcel_price;
-
-//                                    if ($item_count >= 2 * $this->combo) {
+										// $tmp_price = $this->custom_green_zone_parcel_price;
+										// if ($item_count >= 2 * $this->combo) {
 										if ($quantity >= 2 * $this->combo) {
 
 											$rate = array(
@@ -519,11 +516,16 @@ function fastway_au_shipping_method() {
 											$this->add_rate($rate);
 											return;
 										}
-
 									} else if ($r->labelcolour == "WHITE") {
-										$tmp_price = $this->custom_white_zone_parcel_price;
+										// $tmp_price = $this->custom_white_zone_parcel_price;
+
+										// Using labelprice_frequent as required
+										$tmp_price = $r->labelprice_frequent;
 									} else if ($r->labelcolour == "GREY") {
-										$tmp_price = $this->custom_grey_zone_parcel_price;
+										// $tmp_price = $this->custom_white_zone_parcel_price;
+
+										// Using labelprice_frequent as required
+										$tmp_price = $r->labelprice_frequent;
 									}
 								}
 
@@ -543,8 +545,8 @@ function fastway_au_shipping_method() {
 									}
 								}
 
-								if ($parcel_price > $r->totalprice_normal && !is_numeric($tmp_price)) {
-									$parcel_price = $r->totalprice_normal;
+								if ($parcel_price > $r->totalprice_frequent && !is_numeric($tmp_price)) {
+									$parcel_price = $r->totalprice_frequent;
 								}
 							}
 							if ($r->type == "Satchel") {
