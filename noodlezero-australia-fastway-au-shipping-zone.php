@@ -555,7 +555,7 @@ function fastway_au_shipping_zone_method() {
 								$rate = array(
 									'id' => $this->id . "-parcel",
 									'label' => $this->title . " - Parcel (" . $result->result->delivery_timeframe_days . " Days) ",
-									'cost' => 111,
+									'cost' => $parcel_price,
 									'taxes' => false,
 								);
 
