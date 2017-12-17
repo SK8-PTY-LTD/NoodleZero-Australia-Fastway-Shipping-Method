@@ -443,6 +443,18 @@ function fastway_au_shipping_method() {
 											return;
 										}
 									} else if ($d_country == "New Zealand" || $d_country == "NZ") {
+										if ($quantity >= 1 * $this->combo) {
+
+											$rate = array(
+												'id' => $this->id . "-parcel",
+												'label' => "FREE! " . $this->title . " - Parcel (" . $result->result->delivery_timeframe_days . " Days) ",
+												'cost' => 0,
+												'taxes' => false,
+											);
+
+											$this->add_rate($rate);
+											return;
+										}
 									} else {
 									}
 								} else {
