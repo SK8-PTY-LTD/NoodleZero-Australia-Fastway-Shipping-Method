@@ -324,12 +324,12 @@ function fastway_au_shipping_zone_method() {
 					if ($d_state == "Victoria" || $d_state == "VIC") {
 						// All packages destinationed to Victoria should be delivered from Melbourne. Therefore calculate the delivery fee from MEL
 						$final_rfcode = "MEL";
-					} else if ($d_state == "NSW" || "New South Wales" ||
-						$d_state == "TAS" || "Tasmania" ||
-						$d_state == "ACT" || "Australian Capital Territory") {
+					} else if ($d_state == "NSW" || $d_state == "New South Wales" ||
+						$d_state == "TAS" || $d_state == "Tasmania" ||
+						$d_state == "ACT" || $d_state == "Australian Capital Territory") {
 						// All packages destinationed to New South Wales should be delivered from Sydney. Therefore calculate the delivery fee from SYD
 						$final_rfcode = "SYD";
-					} else if ($d_state == "QLD" || "Queensland") {
+					} else if ($d_state == "QLD" || $d_state == "Queensland") {
 						// All packages destinationed to Queensland should be delivered from Brisbane. Therefore calculate the delivery fee from BRI
 						$final_rfcode = "BRI";
 					} else {
