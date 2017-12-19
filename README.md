@@ -1,14 +1,14 @@
-# NoodleZero-Australia-Fastway-Shipping-Method
+# NoodleZero-Fastway-Shipping-Method
 This is the WP plugin for NoodleZero WordPress website. It is a derived work from WooCommerce Australia Fastway Shipping Method
 
 For the original plugin, please visit [WordPress Repo](https://en-au.wordpress.org/plugins/woo-australia-fastway-shipping-method/).
 
 This plugin is written under GPL v3.0. 
 
-WooCommerce Australia Fastway Shipping Method
+NoodleZero Fastway Shipping Method
 Contributors: softwarehtec, sk8tech
 Donate link: https://sk8.tech
-Tags: shipping-delivery, woocommerce, shipping, fastway , postcode, deliver, australia, post, tracking, ordering, parcel, softwarehtec
+Tags: shipping-delivery, woocommerce, shipping, fastway , postcode, deliver, post, tracking, ordering, parcel, softwarehtec
 Requires at least: 3.0
 Tested up to: 4.8
 License: GPLv3 or later
