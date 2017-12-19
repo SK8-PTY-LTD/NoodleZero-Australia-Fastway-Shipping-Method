@@ -346,47 +346,6 @@ function fastway_au_shipping_method() {
 				}
 
 				/**
-				 * Special Postage fee calculation for Southisland
-				 * @author Jack
-				 */
-				if ($d_state == "SL" || $d_state == "Southisland") {
-					if ($quantity <= 1 * $this->combo) {
-
-						$rate = array(
-							'id' => $this->id . "-parcel",
-							'label' => $this->title . " - Parcel (" . $result->result->delivery_timeframe_days . " Days) ",
-							'cost' => 25.93,
-							'taxes' => false,
-						);
-
-						$this->add_rate($rate);
-						return;
-					} else if ($quantity <= 2 * $this->combo) {
-
-						$rate = array(
-							'id' => $this->id . "-parcel",
-							'label' => $this->title . " - Parcel (" . $result->result->delivery_timeframe_days . " Days) ",
-							'cost' => 33.18,
-							'taxes' => false,
-						);
-
-						$this->add_rate($rate);
-						return;
-					} else if ($quantity > 2 * $this->combo) {
-
-						$rate = array(
-							'id' => $this->id . "-parcel",
-							'label' => "FREE! " . $this->title . " - Parcel (" . $result->result->delivery_timeframe_days . " Days) ",
-							'cost' => 0,
-							'taxes' => false,
-						);
-
-						$this->add_rate($rate);
-						return;
-					}
-				}
-
-				/**
 				 * Auto decide FastWay branch from Address
 				 * @author Jack
 				 */
