@@ -401,8 +401,8 @@ function fastway_au_shipping_method() {
 
 						foreach ($result->result->services as $k => $r) {
 
-							if ($r->type == "Parcel" && $r->name != "Road (0-2kg)") {
-								// Excluding "Road (0-2kg)" from New Zealand Fastway
+							if ($r->type == "Parcel" && $r->name != "Road (0-2kg)" && $r->name != "Road (3-5kg)") {
+								// Excluding "Road (0-2kg)" && "Road (3-5kg)" from New Zealand Fastway
 
 								$tmp_price = "";
 								// $exc_price = $this->custom_parcel_excess_price;
