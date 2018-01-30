@@ -1,16 +1,16 @@
 <?php
 
 /**
- * Plugin Name: NoodleZero Australia Fastway Shipping Method
+ * Plugin Name: NoodleZero New Zealand Fastway Shipping Method
  * Plugin URI: https://sk8.tech
- * Description: Fastway Couriers currently operates across key metropolitan and regional locations across Australia, offering a low cost and fast courier delivery service. Franchise opportunities also available.
+ * Description: Fastway Couriers currently operates across key metropolitan and regional locations across New Zealand, offering a low cost and fast courier delivery service. Franchise opportunities also available.
  * Version: 1.2.0
  * Author: SK8Tech
  * Author URI: https://sk8.tech
  * License: GPL-3.0+
  * License URI: http://www.gnu.org/licenses/gpl-3.0.html
  * Domain Path: /lang
- * Text Domain: noodlezero-australia-fastway-shipping-method
+ * Text Domain: noodlezero-newzealand-fastway-shipping-method
  */
 
 if (!defined('WPINC')) {
@@ -21,46 +21,45 @@ if (!in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get
 	return false;
 }
 
-require_once "noodlezero-australia-fastway-au-shipping-zone.php";
+require_once "noodlezero-newzealand-fastway-au-shipping-zone.php";
 
 if (get_option("fastway_error") !== false) {
-	add_action('admin_notices', 'fastway_au_api_error');
+	add_action('admin_notices', 'fastway_nz_api_error');
 }
 
-function fastway_au_curl_error() {
+function fastway_nz_curl_error() {
 	$class = 'notice notice-error';
-	$message = __('PHP Curl extension was not enabled', 'sk8tech-fastwayau');
+	$message = __('PHP Curl extension was not enabled', 'sk8tech-fastwaynz');
 	printf('<div class="%1$s"><p>%2$s</p></div>', esc_attr($class), esc_html($message));
 }
 
-function fastway_au_api_error() {
+function fastway_nz_api_error() {
 	$class = 'notice notice-error';
 	$error = get_option("fastway_error");
 	if (!empty($error)) {
-		$message = __($error, 'sk8tech-fastwayau');
+		$message = __($error, 'sk8tech-fastwaynz');
 		printf('<div class="%1$s"><p>Fastway: %2$s</p></div>', esc_attr($class), esc_html($message));
 
 	}
 
 }
 
-function fastway_au_shipping_method() {
-	if (!class_exists('Fastway_Au_Shipping_Method')) {
-		class Fastway_Au_Shipping_Method extends WC_Shipping_Method {
+function fastway_nz_shipping_method() {
+	if (!class_exists('Fastway_NZ_Shipping_Method')) {
+		class Fastway_NZ_Shipping_Method extends WC_Shipping_Method {
 			var $api_key, $pickup_rfcode, $support_type, $custom_local_parcel_price;
 			public function __construct() {
-				$this->id = 'fastway_au';
-				$this->method_title = __('Fastway AU', 'sk8tech-fastwayau');
-				$this->method_description = __('Fastway Couriers currently operates across key metropolitan and regional locations across Australia, offering a low cost and fast courier delivery service. Franchise opportunities also available.<br/><strong style="color:red">Currency Of Shipping Price Is In Australian Dollar<s/trong><br/><strong style="color:black">Support URL: <a href="https://sk8.tech/" target="_blank">https://sk8.tech/</a></strong><br/><strong style="color:black">Plugin URL: <a href="https://github.com/SK8-PTY-LTD/NoodleZero-Australia-Fastway-Shipping-Method/" target="_blank">Github Repo</a></strong><br/><a href="http://au.api.fastway.org/latest/docs/page/GetAPIKey.html" target="_blank" style="font-weight:bold;">Get Fastway API Key</a> ', 'sk8tech-fastwayau');
+				$this->id = 'fastway_nz';
+				$this->method_title = __('Fastway NZ', 'sk8tech-fastwaynz');
+				$this->method_description = __('Fastway Couriers currently operates across key metropolitan and regional locations across New Zealand, offering a low cost and fast courier delivery service. Franchise opportunities also available.<br/><strong style="color:red">Currency Of Shipping Price Is In New Zealand Dollar<s/trong><br/><strong style="color:black">Support URL: <a href="https://sk8.tech/" target="_blank">https://sk8.tech/</a></strong><br/><strong style="color:black">Plugin URL: <a href="https://github.com/SK8-PTY-LTD/NoodleZero-Australia-Fastway-Shipping-Method/" target="_blank">Github Repo</a></strong><br/><a href="http://nz.api.fastway.org/latest/docs/page/GetAPIKey.html" target="_blank" style="font-weight:bold;">Get Fastway API Key</a> ', 'sk8tech-fastwaynz');
 				$this->availability = 'including';
 				$this->countries = array(
-					'AU',
 					'NZ',
 				);
 				$this->init();
 				$this->enabled = isset($this->settings['enabled']) ? $this->settings['enabled'] : 'yes';
-				$this->title = isset($this->settings['title']) ? $this->settings['title'] : __('Fastway AU Shipping', 'sk8tech-fastwayau');
-				$this->combo = isset($this->settings['combo']) ? $this->settings['combo'] : __('20', 'sk8tech-fastwayau');
+				$this->title = isset($this->settings['title']) ? $this->settings['title'] : __('Fastway NZ Shipping', 'sk8tech-fastwaynz');
+				$this->combo = isset($this->settings['combo']) ? $this->settings['combo'] : __('20', 'sk8tech-fastwaynz');
 				$this->api_key = $this->settings['api_key'];
 
 				if (empty($this->api_key)) {
@@ -70,23 +69,13 @@ function fastway_au_shipping_method() {
 				$this->pickup_rfcode = $this->settings['pickup_rfcode'];
 				$this->support_type = $this->settings['support_type'];
 
-				// $this->custom_white_zone_parcel_price = $this->settings['custom_white_zone_parcel_price'];
-				// $this->custom_red_zone_parcel_price = $this->settings['custom_red_zone_parcel_price'];
-				// $this->custom_orange_zone_parcel_price = $this->settings['custom_orange_zone_parcel_price'];
-				// $this->custom_green_zone_parcel_price = $this->settings['custom_green_zone_parcel_price'];
-				// $this->custom_white_zone_parcel_price = $this->settings['custom_white_zone_parcel_price'];
-				// $this->custom_grey_zone_parcel_price = $this->settings['custom_grey_zone_parcel_price'];
-
-				// $this->custom_nat_a2_satchel_price = $this->settings['custom_nat_a2_satchel_price'];
-				// $this->custom_nat_a3_satchel_price = $this->settings['custom_nat_a3_satchel_price'];
-				// $this->custom_nat_a4_satchel_price = $this->settings['custom_nat_a4_satchel_price'];
-				// $this->custom_nat_a5_satchel_price = $this->settings['custom_nat_a5_satchel_price'];
-
-				// $this->custom_local_satchel_price = $this->settings['custom_local_satchel_price'];
-				// $this->custom_pink_parcel_price = $this->settings['custom_pink_parcel_price'];
-				// $this->custom_lime_parcel_price = $this->settings['custom_lime_parcel_price'];
-				// $this->custom_local_parcel_price = $this->settings['custom_local_parcel_price'];
-				// $this->custom_parcel_excess_price = $this->settings['custom_parcel_excess_price'];
+				$this->custom_pink_zone_parcel_price = $this->settings['custom_pink_zone_parcel_price'];
+				$this->custom_blue_zone_parcel_price = $this->settings['custom_blue_zone_parcel_price'];
+				$this->custom_bluelt_zone_parcel_price = $this->settings['custom_bluelt_zone_parcel_price'];
+				$this->custom_lime_zone_parcel_price = $this->settings['custom_lime_zone_parcel_price'];
+				$this->custom_orange_zone_parcel_price = $this->settings['custom_orange_zone_parcel_price'];
+				$this->custom_yellow_zone_parcel_price = $this->settings['custom_yellow_zone_parcel_price'];
+				$this->custom_local_parcel_price = $this->get_option('custom_local_parcel_price');
 
 			}
 
@@ -99,7 +88,7 @@ function fastway_au_shipping_method() {
 
 				$rfcode = array("" => "Please Select");
 				$api_key = "";
-				$formsetting = get_option("woocommerce_fastway_au_settings");
+				$formsetting = get_option("woocommerce_fastway_nz_settings");
 
 				if (is_array($formsetting) && count($formsetting) > 0) {
 					$api_key = $formsetting["api_key"];
@@ -119,10 +108,10 @@ function fastway_au_shipping_method() {
 
 					if (!empty($api_key)) {
 						if (!is_callable('curl_init')) {
-							add_action('admin_notices', 'fastway_au_curl_error');
+							add_action('admin_notices', 'fastway_nz_curl_error');
 						}
 
-						$url = "http://au.api.fastway.org/latest/psc/listrfs?CountryCode=1&api_key=" . $api_key;
+						$url = "http://nz.api.fastway.org/latest/psc/listrfs?CountryCode=1&api_key=" . $api_key;
 
 						$handle = curl_init($url);
 
@@ -170,131 +159,91 @@ function fastway_au_shipping_method() {
 
 				$this->form_fields = array(
 					'enabled' => array(
-						'title' => __('Enable', 'sk8tech-fastwayau'),
+						'title' => __('Enable', 'sk8tech-fastwaynz'),
 						'type' => 'checkbox',
-						'description' => __('Enable this shipping.', 'sk8tech-fastwayau'),
+						'description' => __('Enable this shipping.', 'sk8tech-fastwaynz'),
 						'default' => 'yes',
 					),
 					'title' => array(
-						'title' => __('Title', 'sk8tech-fastwayau'),
+						'title' => __('Title', 'sk8tech-fastwaynz'),
 						'type' => 'text',
-						'description' => __('Title to be display on site', 'sk8tech-fastwayau'),
-						'default' => __('Fastway AU Shipping', 'sk8tech-fastwayau'),
+						'description' => __('Title to be display on site', 'sk8tech-fastwaynz'),
+						'default' => __('Fastway NZ Shipping', 'sk8tech-fastwaynz'),
 					),
 					'combo' => array(
-						'title' => __('Combo quantity', 'sk8tech-fastwayau'),
+						'title' => __('Combo quantity', 'sk8tech-fastwaynz'),
 						'type' => 'number',
-						'description' => __('No. of products to allow free shipping', 'sk8tech-fastwayau'),
+						'description' => __('No. of products to allow free shipping', 'sk8tech-fastwaynz'),
 						'default' => 20,
 					),
 					'api_key' => array(
-						'title' => __('API Key', 'sk8tech-fastwayau'),
+						'title' => __('API Key', 'sk8tech-fastwaynz'),
 						'type' => 'password',
-						'description' => __('<a href="http://au.api.fastway.org/latest/docs/page/GetAPIKey.html" target="_blank" style="font-weight:bold;">Get Your Own Fastway API Key</a> or leave as empty', 'sk8tech-fastwayau'),
-						'default' => __('', 'sk8tech-fastwayau'),
+						'description' => __('<a href="http://nz.api.fastway.org/latest/docs/page/GetAPIKey.html" target="_blank" style="font-weight:bold;">Get Your Own Fastway API Key</a> or leave as empty', 'sk8tech-fastwaynz'),
+						'default' => __('', 'sk8tech-fastwaynz'),
 					),
 					'pickup_rfcode' => array(
-						'title' => __('Default Franchise', 'sk8tech-fastwayau'),
+						'title' => __('Default Franchise', 'sk8tech-fastwaynz'),
 						'type' => 'select',
-						'description' => __('Options will be presented after API Key was filled and saved ', 'sk8tech-fastwayau'),
-						'default' => __('', 'sk8tech-fastwayau'),
+						'description' => __('Options will be presented after API Key was filled and saved ', 'sk8tech-fastwaynz'),
+						'default' => __('', 'sk8tech-fastwaynz'),
 						'options' => $rfcode,
 					),
 					'support_type' => array(
-						'title' => __('Service Type', 'sk8tech-fastwayau'),
+						'title' => __('Service Type', 'sk8tech-fastwaynz'),
 						'type' => 'select',
-						'description' => __('', 'sk8tech-fastwayau'),
-						'default' => __('', 'sk8tech-fastwayau'),
-						'options' => array("" => "All", "Parcel" => "Parcel", "Satchel" => "Satchel"),
+						'description' => __('', 'sk8tech-fastwaynz'),
+						'default' => __('', 'sk8tech-fastwaynz'),
+						'options' => array("" => "All", "Parcel" => "Parcel"),
 					),
-					// 'custom_local_parcel_price' => array(
-					// 	'title' => __('Custom Local Parcel Price', 'sk8tech-fastwayau'),
-					// 	'type' => 'decimal',
-					// 	'description' => __('', 'sk8tech-fastwayau'),
-					// 	'default' => __('', 'sk8tech-fastwayau'),
-					// ),
-					// 'custom_lime_parcel_price' => array(
-					// 	'title' => __('Custom Lime Parcel Price', 'sk8tech-fastwayau'),
-					// 	'type' => 'decimal',
-					// 	'description' => __('', 'sk8tech-fastwayau'),
-					// 	'default' => __('', 'sk8tech-fastwayau'),
-					// ),
-					// 'custom_pink_parcel_price' => array(
-					// 	'title' => __('Custom Pink Parcel Price', 'sk8tech-fastwayau'),
-					// 	'type' => 'decimal',
-					// 	'description' => __('', 'sk8tech-fastwayau'),
-					// 	'default' => __('', 'sk8tech-fastwayau'),
-					// ),
-					// 'custom_red_zone_parcel_price' => array(
-					// 	'title' => __('Custom Red Zone Parcel Price', 'sk8tech-fastwayau'),
-					// 	'type' => 'decimal',
-					// 	'description' => __('', 'sk8tech-fastwayau'),
-					// 	'default' => __('', 'sk8tech-fastwayau'),
-					// ),
-
-					// 'custom_orange_zone_parcel_price' => array(
-					// 	'title' => __('Custom Orange Zone Parcel Price', 'sk8tech-fastwayau'),
-					// 	'type' => 'decimal',
-					// 	'description' => __('', 'sk8tech-fastwayau'),
-					// 	'default' => __('', 'sk8tech-fastwayau'),
-					// ),
-
-					// 'custom_green_zone_parcel_price' => array(
-					// 	'title' => __('Custom Green Zone Parcel Price', 'sk8tech-fastwayau'),
-					// 	'type' => 'decimal',
-					// 	'description' => __('', 'sk8tech-fastwayau'),
-					// 	'default' => __('', 'sk8tech-fastwayau'),
-					// ),
-
-					// 'custom_white_zone_parcel_price' => array(
-					// 	'title' => __('Custom White Zone Parcel Price', 'sk8tech-fastwayau'),
-					// 	'type' => 'decimal',
-					// 	'description' => __('', 'sk8tech-fastwayau'),
-					// 	'default' => __('', 'sk8tech-fastwayau'),
-					// ),
-
-					// 'custom_grey_zone_parcel_price' => array(
-					// 	'title' => __('Custom Grey Zone Parcel Price', 'sk8tech-fastwayau'),
-					// 	'type' => 'decimal',
-					// 	'description' => __('', 'sk8tech-fastwayau'),
-					// 	'default' => __('', 'sk8tech-fastwayau'),
-					// ),
-					// 'custom_parcel_excess_price' => array(
-					// 	'title' => __('Custom Parcel Excess Price', 'sk8tech-fastwayau'),
-					// 	'type' => 'decimal',
-					// 	'description' => __('', 'sk8tech-fastwayau'),
-					// 	'default' => __('', 'sk8tech-fastwayau'),
-					// ),
-					// 'custom_local_satchel_price' => array(
-					// 	'title' => __('Custom Local Satchel Price', 'sk8tech-fastwayau'),
-					// 	'type' => 'decimal',
-					// 	'description' => __('', 'sk8tech-fastwayau'),
-					// 	'default' => __('', 'sk8tech-fastwayau'),
-					// ),
-					// 'custom_nat_a5_satchel_price' => array(
-					// 	'title' => __('Custom National A5 Satchel Price', 'sk8tech-fastwayau'),
-					// 	'type' => 'decimal',
-					// 	'description' => __('', 'sk8tech-fastwayau'),
-					// 	'default' => __('', 'sk8tech-fastwayau'),
-					// ),
-					// 'custom_nat_a4_satchel_price' => array(
-					// 	'title' => __('Custom National A4 Satchel Price', 'sk8tech-fastwayau'),
-					// 	'type' => 'decimal',
-					// 	'description' => __('', 'sk8tech-fastwayau'),
-					// 	'default' => __('', 'sk8tech-fastwayau'),
-					// ),
-					// 'custom_nat_a3_satchel_price' => array(
-					// 	'title' => __('Custom National A3 Satchel Price', 'sk8tech-fastwayau'),
-					// 	'type' => 'decimal',
-					// 	'description' => __('', 'sk8tech-fastwayau'),
-					// 	'default' => __('', 'sk8tech-fastwayau'),
-					// ),
-					// 'custom_nat_a2_satchel_price' => array(
-					// 	'title' => __('Custom National A2 Satchel Price', 'sk8tech-fastwayau'),
-					// 	'type' => 'decimal',
-					// 	'description' => __('', 'sk8tech-fastwayau'),
-					// 	'default' => __('', 'sk8tech-fastwayau'),
-					// ),
+					'custom_local_parcel_price' => array(
+						'title' => __('Custom Local Parcel Price', 'sk8tech-fastwaynz'),
+						'type' => 'decimal',
+						'description' => __('', 'sk8tech-fastwaynz'),
+						'default' => __('', 'sk8tech-fastwaynz'),
+					),
+					'custom_pink_zone_parcel_price' => array(
+						'title' => __('Custom Pink Parcel Price', 'sk8tech-fastwaynz'),
+						'type' => 'decimal',
+						'description' => __('', 'sk8tech-fastwaynz'),
+						'default' => __('', 'sk8tech-fastwaynz'),
+					),
+					'custom_blue_zone_parcel_price' => array(
+						'title' => __('Custom Blue Parcel Price', 'sk8tech-fastwaynz'),
+						'type' => 'decimal',
+						'description' => __('', 'sk8tech-fastwaynz'),
+						'default' => __('', 'sk8tech-fastwaynz'),
+					),
+					'custom_bluelt_zone_parcel_price' => array(
+						'title' => __('Custom Blue LT Parcel Price', 'sk8tech-fastwaynz'),
+						'type' => 'decimal',
+						'description' => __('', 'sk8tech-fastwaynz'),
+						'default' => __('', 'sk8tech-fastwaynz'),
+					),
+					'custom_lime_zone_parcel_price' => array(
+						'title' => __('Custom Lime Parcel Price', 'sk8tech-fastwaynz'),
+						'type' => 'decimal',
+						'description' => __('', 'sk8tech-fastwaynz'),
+						'default' => __('', 'sk8tech-fastwaynz'),
+					),
+					'custom_orange_zone_parcel_price' => array(
+						'title' => __('Custom Orange Zone Parcel Price', 'sk8tech-fastwaynz'),
+						'type' => 'decimal',
+						'description' => __('', 'sk8tech-fastwaynz'),
+						'default' => __('', 'sk8tech-fastwaynz'),
+					),
+					'custom_yellow_zone_parcel_price' => array(
+						'title' => __('Custom Yellow Zone Parcel Price', 'sk8tech-fastwaynz'),
+						'type' => 'decimal',
+						'description' => __('', 'sk8tech-fastwaynz'),
+						'default' => __('', 'sk8tech-fastwaynz'),
+					),
+					'custom_parcel_excess_price' => array(
+						'title' => __('Custom Parcel Excess Price', 'sk8tech-fastwaynz'),
+						'type' => 'decimal',
+						'description' => __('', 'sk8tech-fastwaynz'),
+						'default' => __('', 'sk8tech-fastwaynz'),
+					),
 
 				);
 
@@ -310,15 +259,11 @@ function fastway_au_shipping_method() {
 				}
 
 				$quantity = WC()->cart->get_cart_contents_count();
-				// echo '<pre> Content Count', $quantity, '</pre>';
-
-				// echo '<pre> Weight Total Before', $weight, '</pre>';
 				$weight = wc_get_weight($weight, 'kg');
-				// echo '<pre> Weight Total After', $weight, '</pre>';
 
 				if ($weight > 25) {
 
-					$message = sprintf(__('Sorry, %d kg exceeds the maximum weight of %d kg for %s', 'fastway_au'), $weight, 25, $this->title);
+					$message = sprintf(__('Sorry, %d kg exceeds the maximum weight of %d kg for %s', 'fastway_nz'), $weight, 25, $this->title);
 
 					$messageType = "error";
 
@@ -358,9 +303,9 @@ function fastway_au_shipping_method() {
 					return;
 				}
 
-				// Sample Reuqest: http://au.api.fastway.org/v3/psc/lookup/SYD/Ultimo/2007/20?api_key=
+				// Sample Reuqest: http://nz.api.fastway.org/v3/psc/lookup/SYD/Ultimo/2007/20?api_key=
 				//				$handle = curl_init($url);
-				$url = "http://au.api.fastway.org/v3/psc/lookup/" . $final_rfcode . "/" . $d_suburb . "/" . $d_postcode . "/" . ($weight) . "?api_key=" . $this->api_key;
+				$url = "http://nz.api.fastway.org/v3/psc/lookup/" . $final_rfcode . "/" . $d_suburb . "/" . $d_postcode . "/" . ($weight) . "?api_key=" . $this->api_key;
 				$url = str_replace('+', '%20', $url);
 				$content = file_get_contents($url);
 
@@ -391,7 +336,6 @@ function fastway_au_shipping_method() {
 						add_option("fastway_error", "", $deprecated, $autoload);
 					}
 					$parcel_price = 999999;
-					$satchel_price = 999999;
 					$excess_package = 0;
 
 					$item_count = WC()->cart->get_cart_contents_count();
@@ -405,14 +349,9 @@ function fastway_au_shipping_method() {
 								// Excluding "Road (0-2kg)" && "Road (3-5kg)" from New Zealand Fastway
 
 								$tmp_price = "";
-								// $exc_price = $this->custom_parcel_excess_price;
-
-								$exc_price = $r->excess_label_price_frequent;
+								$exc_price = $this->custom_parcel_excess_price;
 
 								if ($r->name == "Local") {
-									// $tmp_price = $this->custom_local_parcel_price;
-
-									// if ($item_count >= 1 * $this->combo) {
 									if ($quantity >= 1 * $this->combo) {
 
 										$rate = array(
@@ -424,11 +363,11 @@ function fastway_au_shipping_method() {
 
 										$this->add_rate($rate);
 										return;
+									} else {
+										$tmp_price = $this->custom_local_parcel_price;
 									}
 								} else {
-									if ($r->labelcolour == "LIME") {
-										// $tmp_price = $this->custom_lime_parcel_price;
-										// if ($item_count >= 2 * $this->combo) {
+									if ($r->labelcolour == "PINK") {
 										if ($quantity >= 1 * $this->combo) {
 
 											$rate = array(
@@ -440,10 +379,10 @@ function fastway_au_shipping_method() {
 
 											$this->add_rate($rate);
 											return;
+										} else {
+											$tmp_price = $this->custom_pink_zone_parcel_price;
 										}
 									} else if ($r->labelcolour == "BLUE") {
-										// $tmp_price = $this->custom_lime_parcel_price;
-										// if ($item_count >= 2 * $this->combo) {
 										if ($quantity >= 1 * $this->combo) {
 
 											$rate = array(
@@ -455,10 +394,10 @@ function fastway_au_shipping_method() {
 
 											$this->add_rate($rate);
 											return;
+										} else {
+											$tmp_price = $this->custom_blue_zone_parcel_price;
 										}
 									} else if ($r->labelcolour == "LT BLUE") {
-										// $tmp_price = $this->custom_lime_parcel_price;
-										// if ($item_count >= 2 * $this->combo) {
 										if ($quantity >= 1 * $this->combo) {
 
 											$rate = array(
@@ -470,10 +409,10 @@ function fastway_au_shipping_method() {
 
 											$this->add_rate($rate);
 											return;
+										} else {
+											$tmp_price = $this->custom_bluelt_zone_parcel_price;
 										}
-									} else if ($r->labelcolour == "PINK") {
-										// $tmp_price = $this->custom_pink_parcel_price;
-										// if ($item_count >= 2 * $this->combo) {
+									} else if ($r->labelcolour == "LIME") {
 										if ($quantity >= 1 * $this->combo) {
 
 											$rate = array(
@@ -485,13 +424,10 @@ function fastway_au_shipping_method() {
 
 											$this->add_rate($rate);
 											return;
+										} else {
+											$tmp_price = $this->custom_lime_zone_parcel_price;
 										}
-									} else if ($r->labelcolour == "RED") {
-										// Not set
-										$tmp_price = $r->labelprice_frequent;
 									} else if ($r->labelcolour == "ORANGE") {
-										// $tmp_price = $this->custom_orange_zone_parcel_price;
-										// if ($item_count >= 2 * $this->combo) {
 										if ($quantity >= 2 * $this->combo) {
 
 											$rate = array(
@@ -503,10 +439,10 @@ function fastway_au_shipping_method() {
 
 											$this->add_rate($rate);
 											return;
+										} else {
+											$tmp_price = $this->custom_orange_zone_parcel_price;
 										}
 									} else if ($r->labelcolour == "YELLOW") {
-										// $tmp_price = $this->custom_orange_zone_parcel_price;
-										// if ($item_count >= 2 * $this->combo) {
 										if ($quantity >= 2 * $this->combo) {
 
 											$rate = array(
@@ -518,16 +454,9 @@ function fastway_au_shipping_method() {
 
 											$this->add_rate($rate);
 											return;
+										} else {
+											$tmp_price = $this->custom_orange_zone_parcel_price;
 										}
-									} else if ($r->labelcolour == "GREEN") {
-										// Not set
-										$tmp_price = $r->labelprice_frequent;
-									} else if ($r->labelcolour == "WHITE") {
-										// Not set
-										$tmp_price = $r->labelprice_frequent;
-									} else if ($r->labelcolour == "GREY") {
-										// Not set
-										$tmp_price = $r->labelprice_frequent;
 									}
 								}
 
@@ -579,13 +508,13 @@ function fastway_au_shipping_method() {
 	}
 }
 
-add_action('woocommerce_shipping_init', 'fastway_au_shipping_method');
+add_action('woocommerce_shipping_init', 'fastway_nz_shipping_method');
 
-function add_fastway_au_shipping_method($methods) {
-	$methods[] = 'Fastway_Au_Shipping_Method';
+function add_fastway_nz_shipping_method($methods) {
+	$methods[] = 'Fastway_NZ_Shipping_Method';
 	return $methods;
 }
 
-add_filter('woocommerce_shipping_methods', 'add_fastway_au_shipping_method');
+add_filter('woocommerce_shipping_methods', 'add_fastway_nz_shipping_method');
 
 add_filter('woocommerce_shipping_calculator_enable_city', '__return_true');
