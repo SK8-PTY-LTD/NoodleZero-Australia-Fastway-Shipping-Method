@@ -318,6 +318,12 @@ function fastway_au_shipping_method() {
 					} else if ($d_state == "QLD" || $d_state == "Queensland") {
 						// All packages destinationed to Queensland should be delivered from Brisbane. Therefore calculate the delivery fee from BRI
 						$final_rfcode = "BRI";
+					} else if ($d_state == "WA" || $d_state == "Western Australia") {
+						// All packages destinationed to Queensland should be delivered from Brisbane. Therefore calculate the delivery fee from BRI
+						$final_rfcode = "PER";
+					} else if ($d_state == "SA" || $d_state == "South Australia") {
+						// All packages destinationed to Queensland should be delivered from Brisbane. Therefore calculate the delivery fee from BRI
+						$final_rfcode = "ADL";
 					} else {
 						// All other places, no delivery offered
 						return;
