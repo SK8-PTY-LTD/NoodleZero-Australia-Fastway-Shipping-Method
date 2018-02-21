@@ -455,7 +455,7 @@ function fastway_nz_shipping_method() {
 											$this->add_rate($rate);
 											return;
 										} else {
-											$tmp_price = $this->custom_orange_zone_parcel_price;
+											$tmp_price = $this->custom_yellow_zone_parcel_price;
 										}
 									}
 								}
