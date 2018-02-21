@@ -476,8 +476,8 @@ function fastway_nz_shipping_method() {
 									}
 								}
 
-								if ($parcel_price > $r->totalprice_frequent && !is_numeric($tmp_price)) {
-									$parcel_price = $r->totalprice_frequent;
+								if ($parcel_price > $r->totalprice_normal && !is_numeric($tmp_price)) {
+									$parcel_price = $r->totalprice_normal;
 								}
 							}
 						}

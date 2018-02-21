@@ -321,7 +321,7 @@ function fastway_nz_shipping_zone_method() {
 								$tmp_price = "";
 								// $exc_price = $this->custom_parcel_excess_price;
 
-								$exc_price = $r->excess_label_price_frequent;
+								$exc_price = $r->excess_label_price_normal;
 
 								if ($r->name == "Local") {
 									if ($quantity >= 1 * $this->combo) {
@@ -448,8 +448,8 @@ function fastway_nz_shipping_zone_method() {
 									}
 								}
 
-								if ($parcel_price > $r->totalprice_frequent && !is_numeric($tmp_price)) {
-									$parcel_price = $r->totalprice_frequent;
+								if ($parcel_price > $r->totalprice_normal && !is_numeric($tmp_price)) {
+									$parcel_price = $r->totalprice_normal;
 								}
 							}
 						}
